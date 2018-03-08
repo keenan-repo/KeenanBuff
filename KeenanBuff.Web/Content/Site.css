@@ -1,0 +1,403 @@
+﻿
+html {
+    font-family: "Lucida Grande", Tahoma, Verdana, Arial, sans-serif;
+}
+
+lead {
+    color: black;
+}
+
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    background-color: #222B34;
+    color:#fff;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+
+section article {
+    box-shadow: 0 0 3px rgba(10,10,10,0.4);
+    border: 1px solid #242F39;
+    border-radius: 1px;
+    background: #242F39;
+    padding: 4px;
+    clear: right;
+}
+
+
+table {
+    width: 100%;
+    font-size: 12px;
+}
+
+table th, table td {
+    padding: 4px;
+    text-align: left;
+    vertical-align: middle;
+}
+
+table.fixed {
+    table-layout: fixed;
+}
+
+table.fixed .tf-25 {
+    width: 25px;
+}
+
+table.fixed .tf-30 {
+    width: 30px;
+}
+
+table.fixed .tf-35 {
+    width: 35px;
+}
+
+table.fixed .tf-40 {
+    width: 40px;
+}
+
+table.fixed .tf-75 {
+    width: 75px;
+}
+
+table.fixed .tf-hero {
+    width: 50px;
+}
+
+table.fixed .tf-a {
+    width: auto;
+}
+
+table.fixed .tf-fa {
+    width: 20px;
+    text-align: center;
+    padding: 4px 0;
+}
+
+table.fixed .tf-pl {
+    padding-left: 4px;
+}
+
+table.fixed td, table.fixed th {
+    padding: 4px 3px 4px 0;
+    box-sizing: border-box;
+}
+
+table.fixed .tf-items {
+    width: 245px;
+}
+
+table .single-lines {
+    max-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+table tbody tr:nth-child(2n) {
+    background: rgba(255,255,255,0.02);
+}
+table tbody tr {
+    background: rgba(255,255,255,0.04);
+}
+
+
+table tbody tr.faction-radiant {
+    background: rgba(146,165,37,0.12);
+    color: white;
+}
+
+table tbody tr:nth-child(2n).faction-radiant {
+    background: rgba(146,165,37,0.06);
+    color: white;
+}
+
+.header-content-container{
+    box-shadow: 0 0 3px rgba(10,10,10,0.4);
+    border-radius: 1px;
+    margin: 13px 0 0 0;
+}
+
+.header-content{
+    background: #2E3740;
+    position: relative;
+    padding: 8px;
+}
+
+.header-content-title{
+    display: inline-block;
+    vertical-align: top;
+}
+
+.header-content-title small{
+    display: block;
+    color: #C4C4C4;
+    margin-top: 3px;
+    font-size: 14px;
+}
+
+.header-content-secondary{
+    margin-top: 4px;
+    font-size: 13px;
+}
+
+.header-content-secondary dl{
+    display: inline-block;
+    margin: 5px 12px 14px 0;
+    vertical-align: top;
+}
+
+.header-content-secondary dl dt {
+    color: rgba(255,255,255,0.6);
+    font-size: 12px;
+    margin-top: 4px;
+    text-transform: uppercase;
+}
+
+.header-content-secondary dl dd {
+    color: white;
+    font-size: 14px;
+}
+
+.match-show{
+    position: relative;
+}
+
+.match-item-with-time {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    margin-right: -5px;
+    vertical-align: top;
+}
+
+.match-show .match-result{
+    font-size: 1.5em;
+    font-weight: 800 !important;
+    line-height: 2em;
+    vertical-align: middle;
+    text-align: center;
+    text-shadow: 1px 1px 5px black;
+    text-transform: uppercase;
+}
+
+.match-victory-subtitle{
+    text-align: center;
+}
+
+.match-victory-subtitle .the-radiant{
+    text-align: right;
+}
+
+.match-victory-subtitle .the-dire{
+    text-align: right;
+}
+
+.match-victory-subtitle .score{
+    font-size: 1.5em;
+    width: 40px;
+    display: inline-block;
+}
+
+.match-victory-subtitle .duration {
+    margin: 0 1em;
+    position: relative;
+    top: -3px;
+}
+
+.the-radiant, .player-radiant {
+    color: #92A525 !important;
+}
+
+.the-dire, .player-dire {
+    color: #C23C2A !important;
+}
+
+.team.radiant {
+    color: #92A525;
+}
+
+.team.dire {
+    color: #C23C2A;
+}
+
+.the-radiant-score{
+    color: #92A525;
+}
+.the-dire-score{
+    color: #C23C2A;
+}
+
+section header {
+    font-size: 16px;
+    color: white;
+    position: relative;
+    padding: 6px 4px;
+    text-shadow: 1px 1px 2px black;
+    text-transform: uppercase;
+    font-weight: normal;
+}
+
+section.radiant header {
+    color: #92A525;
+}
+
+section.dire header {
+    color: #C23C2A;
+}
+.color-faction-dire {
+    color: #C23C2A !important;
+}
+
+.color-faction-radiant {
+    color: #92A525 !important;
+}
+
+
+.r-table {
+    font-size: 0.9em;
+    position: relative;
+}
+.r-row {
+    clear: both;
+    background-color: rgba(255,255,255,0.08);
+    padding: 5px 4px;
+}
+
+.r-table .r-10 {
+    width: 10%;
+}
+
+.r-table .r-35 {
+    width: 35%;
+}
+
+.r-table .r-40 {
+    width: 35%;
+}
+.r-table .r-fluid {
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 0 2px;
+}
+.r-table .r-175 {
+    width: 17.5%;
+}
+.r-table .r-125 {
+    width: 12.5%;
+}
+.r-row {
+    clear: both;
+    background-color: rgba(255,255,255,0.08);
+    padding: 5px 4px;
+}
+.r-row:nth-child(2n) {
+    background-color: rgba(255,255,255,0.04);
+}
+
+.r-table .r-icon-text .r-body {
+    line-height: 14px;
+}
+
+.r-table .r-line-graph .r-body {
+    position: relative;
+    top: 5px;
+}
+
+.r-table .r-body {
+    vertical-align: middle;
+}
+
+.r-table .r-label {
+    font-weight: bold;
+}
+
+.r-table .r-icon-text .image-container {
+    float: left;
+    margin-right: 7px;
+}
+.r-table .image-container {
+    margin-top: 4px;
+}
+
+.r-table.heroes-overview .r-row:first-child .r-label, .r-table.performances-overview .r-row:first-child .r-label {
+    display: block;
+    margin-top: -25px;
+    padding-bottom: 13px;
+    top: 30px;
+    position: absolute;
+}
+
+.image-container {
+    position: relative;
+    display: inline-block;
+    margin-right: 2px;
+    overflow: hidden;
+}
+
+image-container-hero{
+    float:right
+
+}
+
+image-
+.subtext {
+    font-size: 11px !important;
+}
+.subtext {
+    font-weight: 200;
+    font-size: 0.9em;
+    color: rgba(255,255,255,0.6);
+    padding-top: 2px;
+    min-height: 14px;
+    vertical-align: top;
+}
+
+div.content-inner a {
+    color: #A9CF54;
+}
+
+div.col-8 {
+    display: inline-block;
+    margin-right: 12px;
+    width: 644px;
+    vertical-align: top;
+}
+
+div.row-12 {
+    display: block;
+}
+
+div.container-inner {
+    margin: auto;
+    position: relative;
+    max-width: 972px;
+}
+
+.lost, .negative {
+    color: #C23C2A !important;
+}
+
+.won, .positive {
+    color: #A9CF54 !important;
+}

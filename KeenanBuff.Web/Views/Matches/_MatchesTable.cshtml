@@ -1,0 +1,87 @@
+﻿del PagedList.IPagedList<KeenanBuff.Entities.Match>
+@model PagedList.IPagedList<KeenanBuff.Entities.Match>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+<article>
+    <div class="r-table performances-overview">
+        <table>
+            @foreach (var item in Model)
+            {
+                var MatchDetail = item.MatchDetails.Single(p => p.PlayerID == 90935174);
+                int min = item.Duration / 60;
+                int seconds = item.Duration % 60;
+
+                <tr>
+                    <td>
+                        <div class="r-row">
+                            <div class="r-fluid r-40 r-icon-text">
+                                <div class="r-body">
+                                    <div class="image-container image-container-hero image-container-icon">
+                                        <img src="@Url.Content(String.Format("../../assets/{0}.png", MatchDetail.HeroId))" height="24" width="42">
+                                    </div>
+                                    @Html.DisplayFor(modelitem => MatchDetail.HeroName)
+                                    <div class="subtext">
+                                        High Skill
+                                    </div>
+                                </div>
+                            </div> <!--Hero Icon-->
+                            <div class="r-fluid r-175 r-text-only r-right r-match-result">
+                                <div class="r-body">
+                                    @if ((item.RadiantWin && MatchDetail.PlayerSlot < 5) || (!item.RadiantWin && MatchDetail.PlayerSlot > 5))
+                                    {
+                                        <a class="won" href="@Url.Content(String.Format("../../Matches/Details/{0}", item.MatchID))">Won Match</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="lost" href="@Url.Content(String.Format("../../Matches/Details/{0}", item.MatchID))">Lost Match</a>
+                                    }
+
+                                    <div class="subtext">
+                                        @item.StartTime.ToString("MM/dd/yyyy")
+                                    </div>
+                                </div>
+                            </div> <!-- Result-->
+                            <div class="r-fluid r-175 r-text-only r-first">
+                                <div class="r-body">
+                                    @Html.DisplayFor(modelItem => item.LobbyString)
+                                    <div class="subtext">
+                                        @Html.DisplayFor(modelItem => item.GameMode)
+                                    </div>
+                                </div>
+                            </div> <!--Type-->
+                            <div class="r-fluid r-125 r-line-graph r-duration">
+                                <div class="r-body">
+                                    @min:@seconds
+                                </div>
+                            </div> <!-- Duration-->
+                            <div class="r-fluid r-125 r-line-graph">
+                                <div class="r-label">KDA</div>
+                                <div class="r-body">
+
+                                    <span class="kda-record">
+                                        <span class="value">@Html.DisplayFor(modelItem => MatchDetail.Kills)</span>
+                                        /
+                                        <span class="value">@Html.DisplayFor(modelItem => MatchDetail.Deaths)</span>
+                                        /
+                                        <span class="value">@Html.DisplayFor(modelItem => MatchDetail.Assists)</span>
+
+                                    </span>
+                                </div>
+                            </div> <!--KDA-->
+                        </div>
+                    </td>
+                </tr>
+
+            }
+        </table>
+        <br />
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+        @Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+    </div>
+</article>

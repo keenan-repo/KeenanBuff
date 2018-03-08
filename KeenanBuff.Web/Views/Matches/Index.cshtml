@@ -1,0 +1,69 @@
+﻿@model PagedList.IPagedList<KeenanBuff.Entities.Match>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="header-content-container">
+    <div class="header-content">
+        <div class="header-content-primary">
+            <div class="header-content-title">
+                <h1>
+                    Recent Matches
+                    <small>Last 24 Hours</small>
+                </h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<section>
+
+
+
+    <div class="container">
+        <h2>Keenan</h2>
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#matches">Matches</a></li>
+            <li><a data-toggle="tab" href="#heroes">Heroes</a></li>
+            <li><a data-toggle="tab" href="#graphs">Graphs</a></li>
+        </ul>
+
+        <div class="tab-content">
+
+            <div id="matches" class="tab-pane fade">
+                <header>
+                    Latest Matches
+                </header>
+                @Html.Partial("_MatchesTable")
+            </div>
+            <div id="heroes" class="tab-pane fade">
+                <h3>Heroes</h3>
+                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+            </div>
+            <div id="graphs" class="tab-pane fade">
+                <header>
+                    Latest Matches
+                </header>
+                
+            </div>
+        </div>
+    </div>
+
+
+</section>
+
+
+<div class="content-inner">
+    <section>
+        <header>All Heroes, Any Mode, Any Lobby, Any Skill, Any Region</header>
+        <footer>
+            <div class="filter">
+            </div>
+        </footer>
+
+        
+    </section>
+</div>

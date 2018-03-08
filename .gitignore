@@ -3,3 +3,25 @@
 ################################################################################
 
 /KeenanBuff.Common/bin
+/KeenanBuff.Common/obj/Debug
+/KeenanBuff.Common.Tests/bin/Debug
+/KeenanBuff.Common.Tests/obj/Debug
+/KeenanBuff.Data/bin
+/KeenanBuff.Data/obj/Debug
+/KeenanBuff.Data.Tests/bin/Debug
+/KeenanBuff.Data.Tests/obj/Debug
+/KeenanBuff.Entities/bin/roslyn
+/KeenanBuff.Entities/bin
+/KeenanBuff.Entities/obj/Debug
+/KeenanBuff.Entities.Tests/bin/Debug
+/KeenanBuff.Entities.Tests/obj/Debug
+/KeenanBuff.Models/bin/roslyn
+/KeenanBuff.Models/bin
+/KeenanBuff.Models/obj/Debug
+/KeenanBuff.Web/assets
+/KeenanBuff.Web/bin
+/KeenanBuff.Web/obj/Debug
+/packages
+/.vs/KeenanBuff/v14
+/.vs/KeenanBuff/v15/Server/sqlite3
+/.vs
