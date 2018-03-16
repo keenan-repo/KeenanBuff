@@ -18,7 +18,7 @@ namespace KeenanBuff.Data.SteamAPI
             if (System.Diagnostics.Debugger.IsAttached == false)
             {
 
-                //System.Diagnostics.Debugger.Launch();
+                System.Diagnostics.Debugger.Launch();
 
             }     
 
@@ -70,7 +70,7 @@ namespace KeenanBuff.Data.SteamAPI
                     DireScore = apiMatchDetails.result.dire_score,
                 };
 
-                var details = new List<Entities.MatchDetail>();
+                var details = new List<MatchDetail>();
 
                 foreach (var item in apiMatchDetails.result.players)
                 {
@@ -80,32 +80,32 @@ namespace KeenanBuff.Data.SteamAPI
                     var PlayerItems = new List<Entities.PlayerItem>() {
                         new PlayerItem {
                             ItemId = item.item_0,
-                                localized_name = getGameItemName(item.item_0, gameItems),
-                                url = getGameItemURL(item.item_0, gameItems)},
+                                localized_name = GetGameItemName(item.item_0, gameItems),
+                                url = GetGameItemURL(item.item_0, gameItems)},
                         new PlayerItem {
                             ItemId = item.item_1,
-                            localized_name = getGameItemName(item.item_1, gameItems),
-                            url = getGameItemURL(item.item_1, gameItems)
+                            localized_name = GetGameItemName(item.item_1, gameItems),
+                            url = GetGameItemURL(item.item_1, gameItems)
                         },
                         new PlayerItem {
                             ItemId = item.item_2,
-                            localized_name = getGameItemName(item.item_2, gameItems),
-                            url = getGameItemURL(item.item_2, gameItems)
+                            localized_name = GetGameItemName(item.item_2, gameItems),
+                            url = GetGameItemURL(item.item_2, gameItems)
                         },
                         new PlayerItem {
                             ItemId = item.item_3,
-                            localized_name = getGameItemName(item.item_3, gameItems),
-                            url = getGameItemURL(item.item_3, gameItems)
+                            localized_name = GetGameItemName(item.item_3, gameItems),
+                            url = GetGameItemURL(item.item_3, gameItems)
                         },
                         new PlayerItem {
                             ItemId = item.item_4,
-                            localized_name = getGameItemName(item.item_4, gameItems),
-                            url = getGameItemURL(item.item_4, gameItems)
+                            localized_name = GetGameItemName(item.item_4, gameItems),
+                            url = GetGameItemURL(item.item_4, gameItems)
                         },
                         new PlayerItem {
                             ItemId = item.item_5,
-                            localized_name = getGameItemName(item.item_5, gameItems),
-                            url = getGameItemURL(item.item_5, gameItems)
+                            localized_name = GetGameItemName(item.item_5, gameItems),
+                            url = GetGameItemURL(item.item_5, gameItems)
                         }};
 
                     var detail = new MatchDetail
@@ -115,7 +115,7 @@ namespace KeenanBuff.Data.SteamAPI
                         PlayerSlot = item.player_slot,
                         HeroId = item.hero_id,
                         HeroName = heroes.Single(x => x.id == item.hero_id).localized_name,
-                        HeroUrl = getHeroURL(item.hero_id, heroes),
+                        HeroUrl = GetHeroURL(item.hero_id, heroes),
                         PlayerItems = PlayerItems,
                         Kills = item.kills,
                         Deaths = item.deaths,
@@ -139,6 +139,7 @@ namespace KeenanBuff.Data.SteamAPI
                 }
 
                 details.ForEach(s => context.MatchDetails.AddOrUpdate(s));
+                
 
                 matches.Add(match);
                 //onto the next game!
@@ -216,7 +217,7 @@ namespace KeenanBuff.Data.SteamAPI
 
         }
 
-        private string getGameItemName(int id, List<Entities.Item> gameItems)
+        private string GetGameItemName(int id, List<Entities.Item> gameItems)
         {         
             try
             {
@@ -224,7 +225,7 @@ namespace KeenanBuff.Data.SteamAPI
             }
             catch (Exception)
             {
-                return null;
+                return "";
             }
 
         }
@@ -246,12 +247,12 @@ namespace KeenanBuff.Data.SteamAPI
 
         }
 
-        private static string getHeroURL(int id, List<Entities.Hero> heroes)
+        private static string GetHeroURL(int id, List<Entities.Hero> heroes)
         {
             return "http://cdn.dota2.com/apps/dota2/images/heroes/" + heroes.Single(x => x.id == id).name.Remove(0, 14) +"_sb.png";
         }
 
-        private static string getGameItemURL(int id, List<Entities.Item> gameItems)
+        private static string GetGameItemURL(int id, List<Entities.Item> gameItems)
         {
             try
             {
@@ -259,7 +260,7 @@ namespace KeenanBuff.Data.SteamAPI
             }
             catch (Exception)
             {
-                return null;
+                return "";
             }          
         }
 
