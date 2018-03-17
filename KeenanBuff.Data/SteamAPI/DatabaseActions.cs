@@ -18,27 +18,33 @@ namespace KeenanBuff.Data.SteamAPI
             if (System.Diagnostics.Debugger.IsAttached == false)
             {
 
-                System.Diagnostics.Debugger.Launch();
+               System.Diagnostics.Debugger.Launch();
 
             }     
 
-            var matches = new List<Entities.Match>();
+            var Matches = new List<Entities.Match>();
 
 
             //convert the API models into the ViewModels
             var heroes = APIcalls.getHeroes().Select(x => new Entities.Hero()
             {
-                id = x.id,
-                name = x.name,
-                localized_name = x.localized_name
+                HeroId = x.id,
+                HeroName = x.localized_name,
+                HeroUrl = GetHeroURL(x.name),
             }).ToList();
 
             var gameItems = APIcalls.getItems().Select(x => new Entities.Item()
             {
-                id = x.id,
-                localized_name = x.localized_name,
-                url = "http://cdn.dota2.com/apps/dota2/images/items/" + x.name.Remove(0,5) + "_lg.png"
+                ItemId = x.id,
+                Name = x.localized_name,
+                ItemUrl = "http://cdn.dota2.com/apps/dota2/images/items/" + x.name.Remove(0,5) + "_lg.png"
             }).ToList();
+
+            gameItems.Add(new Entities.Item { ItemId = 0, Name = "Empty", ItemUrl = "None" });
+
+            //add to the db
+            gameItems.ForEach(s => context.Items.AddOrUpdate(s));
+            heroes.ForEach(s => context.Heroes.AddOrUpdate(s));
 
 
 
@@ -49,6 +55,64 @@ namespace KeenanBuff.Data.SteamAPI
             foreach (var game in APIcalls.getMatchHistory(account_id).matches)
             {
                 var apiMatchDetails = APIcalls.getMatchDetails(game.match_id);
+
+                //if the game is already there, skip
+                if (context.Matches.Any(m => m.MatchID == game.match_id))
+                {
+                    continue;
+                }
+
+                var MatchDetails = new List<MatchDetail>();
+
+                foreach (var item in apiMatchDetails.result.players)
+                {
+
+                    var PlayerItems = new List<Entities.PlayerItem>() {
+                        new PlayerItem {
+                            ItemId = item.item_0
+                        }, 
+                        new PlayerItem {
+                            ItemId = item.item_1,
+                        },
+                        new PlayerItem {
+                            ItemId = item.item_2,
+                        },
+                        new PlayerItem {
+                            ItemId = item.item_3,
+                        },
+                        new PlayerItem {
+                            ItemId = item.item_4,
+                        },
+                        new PlayerItem {
+                            ItemId = item.item_5,
+                        }};
+
+                    var MatchDetail = new MatchDetail
+                    {
+                        PlayerID = item.account_id,
+                        MatchID = game.match_id,
+                        PlayerSlot = item.player_slot,
+                        HeroId = item.hero_id,
+                        PlayerItems = PlayerItems,
+                        Kills = item.kills,
+                        Deaths = item.deaths,
+                        Assists = item.assists,
+                        LeaverStatus = item.leaver_status,
+                        LastHits = item.last_hits,
+                        Denies = item.denies,
+                        GoldPerMin = item.gold_per_min,
+                        XpPerMin = item.xp_per_min,
+                        Level = item.level,
+                        Gold = item.gold,
+                        GoldSpent = item.gold_spent,
+                        HeroDamage = item.hero_damage,
+                        HeroHealing = item.hero_healing,
+                        TowerDamage = item.tower_damage,
+                        SteamName = item.steam_name
+                    };
+
+                    MatchDetails.Add(MatchDetail);
+                }
 
                 var match = new Entities.Match
                 {
@@ -68,87 +132,15 @@ namespace KeenanBuff.Data.SteamAPI
                     FirstBloodTime = apiMatchDetails.result.first_blood_time,
                     RadiantScore = apiMatchDetails.result.radiant_score,
                     DireScore = apiMatchDetails.result.dire_score,
+                    MatchDetails = MatchDetails
                 };
-
-                var details = new List<MatchDetail>();
-
-                foreach (var item in apiMatchDetails.result.players)
-                {
-
-                    //turn this into a method that should handle nulls
-                    //TODO: MatchID, PlayerID, ItemID,
-                    var PlayerItems = new List<Entities.PlayerItem>() {
-                        new PlayerItem {
-                            ItemId = item.item_0,
-                                localized_name = GetGameItemName(item.item_0, gameItems),
-                                url = GetGameItemURL(item.item_0, gameItems)},
-                        new PlayerItem {
-                            ItemId = item.item_1,
-                            localized_name = GetGameItemName(item.item_1, gameItems),
-                            url = GetGameItemURL(item.item_1, gameItems)
-                        },
-                        new PlayerItem {
-                            ItemId = item.item_2,
-                            localized_name = GetGameItemName(item.item_2, gameItems),
-                            url = GetGameItemURL(item.item_2, gameItems)
-                        },
-                        new PlayerItem {
-                            ItemId = item.item_3,
-                            localized_name = GetGameItemName(item.item_3, gameItems),
-                            url = GetGameItemURL(item.item_3, gameItems)
-                        },
-                        new PlayerItem {
-                            ItemId = item.item_4,
-                            localized_name = GetGameItemName(item.item_4, gameItems),
-                            url = GetGameItemURL(item.item_4, gameItems)
-                        },
-                        new PlayerItem {
-                            ItemId = item.item_5,
-                            localized_name = GetGameItemName(item.item_5, gameItems),
-                            url = GetGameItemURL(item.item_5, gameItems)
-                        }};
-
-                    var detail = new MatchDetail
-                    {
-                        PlayerID = item.account_id,
-                        MatchID = game.match_id,
-                        PlayerSlot = item.player_slot,
-                        HeroId = item.hero_id,
-                        HeroName = heroes.Single(x => x.id == item.hero_id).localized_name,
-                        HeroUrl = GetHeroURL(item.hero_id, heroes),
-                        PlayerItems = PlayerItems,
-                        Kills = item.kills,
-                        Deaths = item.deaths,
-                        Assists = item.assists,
-                        LeaverStatus = item.leaver_status,
-                        LastHits = item.last_hits,
-                        Denies = item.denies,
-                        GoldPerMin = item.gold_per_min,
-                        XpPerMin = item.xp_per_min,
-                        Level = item.level,
-                        Gold = item.gold,
-                        GoldSpent = item.gold_spent,
-                        HeroDamage = item.hero_damage,
-                        HeroHealing = item.hero_healing,
-                        TowerDamage = item.tower_damage,
-                        SteamName = item.steam_name
-                        
-                    };
-
-                    details.Add(detail);
-                }
-
-                details.ForEach(s => context.MatchDetails.AddOrUpdate(s));
-                
-
-                matches.Add(match);
+        
+                MatchDetails.ForEach(s => context.MatchDetails.AddOrUpdate(s));
+                Matches.Add(match);
                 //onto the next game!
             }
 
-            //add everything into the db!
-            gameItems.ForEach(s => context.Items.AddOrUpdate(s));
-            heroes.ForEach(s => context.Heroes.AddOrUpdate(s));
-            matches.ForEach(s => context.Matches.AddOrUpdate(s));
+            Matches.ForEach(s => context.Matches.AddOrUpdate(s));
         }
 
 
@@ -217,19 +209,6 @@ namespace KeenanBuff.Data.SteamAPI
 
         }
 
-        private string GetGameItemName(int id, List<Entities.Item> gameItems)
-        {         
-            try
-            {
-                return gameItems.Single(x => x.id == id).localized_name;
-            }
-            catch (Exception)
-            {
-                return "";
-            }
-
-        }
-
         private static DateTime UnixTimeStampToDateTime(double unixTimeStamp)
         {
             // Unix timestamp is seconds past epoch
@@ -247,21 +226,9 @@ namespace KeenanBuff.Data.SteamAPI
 
         }
 
-        private static string GetHeroURL(int id, List<Entities.Hero> heroes)
+        private static string GetHeroURL(string name)
         {
-            return "http://cdn.dota2.com/apps/dota2/images/heroes/" + heroes.Single(x => x.id == id).name.Remove(0, 14) +"_sb.png";
-        }
-
-        private static string GetGameItemURL(int id, List<Entities.Item> gameItems)
-        {
-            try
-            {
-                return gameItems.Single(x => x.id == id).url;
-            }
-            catch (Exception)
-            {
-                return "";
-            }          
+            return "http://cdn.dota2.com/apps/dota2/images/heroes/" + name.Remove(0, 14) +"_sb.png";
         }
 
 

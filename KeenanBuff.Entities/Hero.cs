@@ -6,8 +6,8 @@ namespace KeenanBuff.Entities
     public class Hero
     {
         [Key]
-        public int id { get; set; }
-        public string name { get; set; }
-        public string localized_name { get; set; }
+        public int HeroId { get; set; }
+        public string HeroName { get; set; }
+        public string HeroUrl { get; set; }
     }
 }

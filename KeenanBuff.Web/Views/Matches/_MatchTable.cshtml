@@ -54,13 +54,9 @@
                         </td>
                         <td class="tf-r r-tab r-group-2 cell-minor">
                              @foreach (var playeritem in item.PlayerItems)
-                            {
-                                if(playeritem.url != "" && playeritem.url != null)
-                                {
-                                    <img src="@Url.Content(String.Format("{0}", playeritem.url))" height="36" width="36">
-                                }
-                    
-                            }
+                             {
+                                <img src="@Url.Content(String.Format("{0}", playeritem.Item.ItemUrl))" height="36" width="36">               
+                             }
                         </td>
                     </tr>
                     }

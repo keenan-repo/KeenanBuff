@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -9,14 +11,17 @@ namespace KeenanBuff.Entities
     {
         public PlayerItem()
         {
-            Id = Guid.NewGuid();
-        }     
-        
+            PlayerItemId = Guid.NewGuid();
+        }
+
+        [Key]
+        public Guid PlayerItemId { get; set; }
+        public Guid MatchDetailId { get; set; }
+        public int ItemId { get; set; }
+
         public virtual MatchDetail MatchDetail { get; set; }
-        public Guid Id { get; set; }
-        public Int64 ItemId { get; set; }
-        public string localized_name { get; set; }
-        public string url { get; set; }
+        public virtual Item Item { get; set; }
+
         
     }
 }
