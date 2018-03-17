@@ -15,7 +15,7 @@ namespace KeenanBuff.Data.SteamAPI
 
         public static APIModels.Result getMatchHistory(long ID)
         {
-            int num_matches = 10;
+            int num_matches = 20;
             string URL_Domain_MatchHistory = "https://api.steampowered.com";
             string URL_history = "/IDOTA2Match_570/GetMatchHistory/V001" + "?key=" + SteamAPI.APIcalls.API_KEY + "&account_id=" + ID + "&matches_requested=" + num_matches;
 

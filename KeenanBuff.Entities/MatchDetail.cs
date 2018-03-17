@@ -13,22 +13,19 @@ namespace KeenanBuff.Entities
     {
         public MatchDetail()
         {
-            Id = Guid.NewGuid();
+            MatchDetailId = Guid.NewGuid();
             PlayerItems = new Collection<PlayerItem>();
         }
-        [Key]
-        public Guid Id { get; set; }
-        
-        public Int64 PlayerID { get; set; }
 
+        public Guid MatchDetailId { get; set; }
+
+        public Int64 PlayerID { get; set; }
         public Int64 MatchID { get; set; }
-        /*public Int64 account_id { get; set; }*/
         public string SteamName { get; set; }
 
         public int PlayerSlot { get; set; }
         public int HeroId { get; set; }
-        public string HeroName { get; set; }
-        public string HeroUrl { get; set; }
+
         public virtual ICollection<PlayerItem> PlayerItems { get; set; } = new Collection<PlayerItem>();
         public int Kills { get; set; }
         public int Deaths { get; set; }
@@ -45,6 +42,7 @@ namespace KeenanBuff.Entities
         public int TowerDamage { get; set; }
         public int HeroHealing { get; set; }
 
-       // public virtual Match Match { get; set; } //this identifies which game the player was in
+        public virtual Match Match { get; set; } 
+        public virtual Hero Hero { get; set; }
     }
 }

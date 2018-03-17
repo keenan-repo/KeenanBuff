@@ -10,7 +10,8 @@ namespace KeenanBuff.Data.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true;
         }
 
         protected override void Seed(KeenanBuff.Data.Context.ApplicationDbContext context)

@@ -112,9 +112,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context\Context.cs" />
-    <Compile Include="Migrations\201711210427078_initial.cs" />
-    <Compile Include="Migrations\201711210427078_initial.Designer.cs">
-      <DependentUpon>201711210427078_initial.cs</DependentUpon>
+    <Compile Include="Migrations\201803171930311_initial.cs" />
+    <Compile Include="Migrations\201803171930311_initial.Designer.cs">
+      <DependentUpon>201803171930311_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -137,8 +137,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201711230434184_intial.resx">
-      <DependentUpon>201711230434184_intial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201803171930311_initial.resx">
+      <DependentUpon>201803171930311_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -8,8 +8,9 @@ namespace KeenanBuff.Entities
     public class Item
     {
        
-        public int id { get; set; }
-        public string localized_name { get; set; }
-        public string url { get; set; }
+        public int ItemId { get; set; }
+        public string Name { get; set; }
+        public string ItemUrl { get; set; }
     }
+
 }

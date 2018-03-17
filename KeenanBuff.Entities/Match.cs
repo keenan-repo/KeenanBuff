@@ -13,9 +13,6 @@ namespace KeenanBuff.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public Int64 MatchID { get; set; }
-       /* [Key]
-        [Column(Order = 2)]
-        public Int64 match_id { get; set; }*/
 
         public Int64 MatchSeqNum { get; set; }
         public DateTime StartTime { get; set; }

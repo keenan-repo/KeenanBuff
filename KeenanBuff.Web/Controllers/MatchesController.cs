@@ -19,13 +19,8 @@ namespace KeenanBuff.Controllers
         public ActionResult Index(int? page)
         {
 
-            var heroes = db.MatchDetails.Where(x => x.PlayerID == 90935174).ToList();
-            var matches = db.Matches.Where
-            var thing = heroes.Select(x => new PlayerOverview
-            {
-                Hero = x.HeroName,
-                LastMatch = x.
-            }).ToList();
+            //var heroes = db.MatchDetails.Where(x => x.PlayerID == 90935174).ToList();
+            
 
             /* Hero
              * last match

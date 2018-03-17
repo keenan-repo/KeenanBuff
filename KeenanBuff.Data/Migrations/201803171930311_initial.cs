@@ -3,7 +3,7 @@ namespace KeenanBuff.Data.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class intial : DbMigration
+    public partial class initial : DbMigration
     {
         public override void Up()
         {
@@ -11,34 +11,32 @@ namespace KeenanBuff.Data.Migrations
                 "dbo.Heroes",
                 c => new
                     {
-                        id = c.Int(nullable: false, identity: true),
-                        name = c.String(),
-                        localized_name = c.String(),
+                        HeroId = c.Int(nullable: false, identity: true),
+                        HeroName = c.String(),
+                        HeroUrl = c.String(),
                     })
-                .PrimaryKey(t => t.id);
+                .PrimaryKey(t => t.HeroId);
             
             CreateTable(
                 "dbo.Items",
                 c => new
                     {
-                        id = c.Int(nullable: false, identity: true),
-                        localized_name = c.String(),
-                        url = c.String(),
+                        ItemId = c.Int(nullable: false, identity: true),
+                        Name = c.String(),
+                        ItemUrl = c.String(),
                     })
-                .PrimaryKey(t => t.id);
+                .PrimaryKey(t => t.ItemId);
             
             CreateTable(
                 "dbo.MatchDetails",
                 c => new
                     {
-                        Id = c.Guid(nullable: false),
+                        MatchDetailId = c.Guid(nullable: false),
                         PlayerID = c.Long(nullable: false),
                         MatchID = c.Long(nullable: false),
                         SteamName = c.String(),
                         PlayerSlot = c.Int(nullable: false),
                         HeroId = c.Int(nullable: false),
-                        HeroName = c.String(),
-                        HeroUrl = c.String(),
                         Kills = c.Int(nullable: false),
                         Deaths = c.Int(nullable: false),
                         Assists = c.Int(nullable: false),
@@ -54,23 +52,11 @@ namespace KeenanBuff.Data.Migrations
                         TowerDamage = c.Int(nullable: false),
                         HeroHealing = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => t.Id)
+                .PrimaryKey(t => t.MatchDetailId)
+                .ForeignKey("dbo.Heroes", t => t.HeroId, cascadeDelete: true)
                 .ForeignKey("dbo.Matches", t => t.MatchID, cascadeDelete: true)
-                .Index(t => t.MatchID);
-            
-            CreateTable(
-                "dbo.PlayerItems",
-                c => new
-                    {
-                        Id = c.Guid(nullable: false),
-                        ItemId = c.Long(nullable: false),
-                        localized_name = c.String(),
-                        url = c.String(),
-                        MatchDetail_Id = c.Guid(),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.MatchDetails", t => t.MatchDetail_Id)
-                .Index(t => t.MatchDetail_Id);
+                .Index(t => t.MatchID)
+                .Index(t => t.HeroId);
             
             CreateTable(
                 "dbo.Matches",
@@ -97,16 +83,34 @@ namespace KeenanBuff.Data.Migrations
                     })
                 .PrimaryKey(t => t.MatchID);
             
+            CreateTable(
+                "dbo.PlayerItems",
+                c => new
+                    {
+                        PlayerItemId = c.Guid(nullable: false),
+                        MatchDetailId = c.Guid(nullable: false),
+                        ItemId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.PlayerItemId)
+                .ForeignKey("dbo.Items", t => t.ItemId, cascadeDelete: true)
+                .ForeignKey("dbo.MatchDetails", t => t.MatchDetailId, cascadeDelete: true)
+                .Index(t => t.MatchDetailId)
+                .Index(t => t.ItemId);
+            
         }
         
         public override void Down()
         {
+            DropForeignKey("dbo.PlayerItems", "MatchDetailId", "dbo.MatchDetails");
+            DropForeignKey("dbo.PlayerItems", "ItemId", "dbo.Items");
             DropForeignKey("dbo.MatchDetails", "MatchID", "dbo.Matches");
-            DropForeignKey("dbo.PlayerItems", "MatchDetail_Id", "dbo.MatchDetails");
-            DropIndex("dbo.PlayerItems", new[] { "MatchDetail_Id" });
+            DropForeignKey("dbo.MatchDetails", "HeroId", "dbo.Heroes");
+            DropIndex("dbo.PlayerItems", new[] { "ItemId" });
+            DropIndex("dbo.PlayerItems", new[] { "MatchDetailId" });
+            DropIndex("dbo.MatchDetails", new[] { "HeroId" });
             DropIndex("dbo.MatchDetails", new[] { "MatchID" });
-            DropTable("dbo.Matches");
             DropTable("dbo.PlayerItems");
+            DropTable("dbo.Matches");
             DropTable("dbo.MatchDetails");
             DropTable("dbo.Items");
             DropTable("dbo.Heroes");
