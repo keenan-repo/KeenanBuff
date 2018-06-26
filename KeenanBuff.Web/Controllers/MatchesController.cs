@@ -19,9 +19,14 @@ namespace KeenanBuff.Controllers
         public ActionResult Index(int? page)
         {
 
-            //var heroes = db.MatchDetails.Where(x => x.PlayerID == 90935174).ToList();
-            
+            var heroes = db.MatchDetails.Where(x => x.PlayerID == 90935174).Select(h => h.Hero).Distinct().ToList();
 
+            var matches = db.MatchDetails.Where(x => x.PlayerID == 90935174).GroupBy(hero => hero.Hero)
+                .Select(group => new { Hero = group.Key, Count = group.Count() }).ToList();
+
+            var wonMatches = db.MatchDetails.Where(x => x.PlayerID == 90935174 && (x.PlayerSlot < 6 && x.Match.RadiantWin) || (x.PlayerSlot > 5 && !x.Match.RadiantWin))
+                .GroupBy(hero => hero.Hero)
+                .Select(group => new { Hero = group.Key, Count = group.Count() }).ToList();
             /* Hero
              * last match
              * Matches
@@ -30,7 +35,7 @@ namespace KeenanBuff.Controllers
              */
 
 
-            int pageSize = 5;
+            int pageSize = 10;
             int pageNumber = (page ?? 1);
             return View(db.Matches.OrderByDescending(m => m.StartTime).ToPagedList(pageNumber, pageSize));
         }

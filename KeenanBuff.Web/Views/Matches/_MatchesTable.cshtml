@@ -1,4 +1,4 @@
-﻿del PagedList.IPagedList<KeenanBuff.Entities.Match>
+﻿
 @model PagedList.IPagedList<KeenanBuff.Entities.Match>
 @using PagedList.Mvc;
 @{
@@ -24,7 +24,7 @@
                                     <div class="image-container image-container-hero image-container-icon">
                                         <img src="@Url.Content(String.Format("../../assets/{0}.png", MatchDetail.HeroId))" height="24" width="42">
                                     </div>
-                                    @Html.DisplayFor(modelitem => MatchDetail.Hero.HeroName)
+                                        <a class="won" href="@Url.Content(String.Format("../../Matches/Details/{0}", item.MatchID))">@Html.DisplayFor(modelitem => MatchDetail.Hero.HeroName)</a>
                                     <div class="subtext">
                                         High Skill
                                     </div>
@@ -50,19 +50,19 @@
                                 <div class="r-body">
                                     @Html.DisplayFor(modelItem => item.LobbyString)
                                     <div class="subtext">
-                                        @Html.DisplayFor(modelItem => item.GameMode)
+                                        @Html.DisplayFor(modelItem => item.GameModeString)
                                     </div>
                                 </div>
                             </div> <!--Type-->
                             <div class="r-fluid r-125 r-line-graph r-duration">
+                                Duration
                                 <div class="r-body">
                                     @min:@seconds
                                 </div>
                             </div> <!-- Duration-->
                             <div class="r-fluid r-125 r-line-graph">
-                                <div class="r-label">KDA</div>
+                                KDA
                                 <div class="r-body">
-
                                     <span class="kda-record">
                                         <span class="value">@Html.DisplayFor(modelItem => MatchDetail.Kills)</span>
                                         /

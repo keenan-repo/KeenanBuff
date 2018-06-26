@@ -26,7 +26,7 @@
                     {
                     <tr class="col-hints faction-radiant player--1">
                         <td class="cell-fill-image party-cell">
-                            <img src="@Url.Content(String.Format("{0}", item.HeroUrl))" height="24" width="42">
+                            <img src="@Url.Content(String.Format("../../assets/{0}.png", item.HeroId))" height="24" width="42">
                         </td>
                         <td class="tf-pl single-lines">
                             <span class="player-radiant">@Html.DisplayFor(modelItem => item.SteamName)</span>
@@ -92,7 +92,7 @@
                     <tr class="col-hints faction-radiant player--1">
                         <td class="cell-fill-image party-cell">
 
-                            <img src="@Url.Content(String.Format("{0}", item.HeroUrl))" height="24" width="42">
+                            <img src="@Url.Content(String.Format("../../assets/{0}.png", item.HeroId))" height="24" width="42">
                         </td>
                         <td class="tf-pl single-lines">
                             <span class="player-radiant">@Html.DisplayFor(modelItem => item.SteamName)</span>
@@ -119,14 +119,10 @@
                             @Html.DisplayFor(modelItem => item.XpPerMin)
                         </td>
                         <td class="tf-r r-tab r-group-2 cell-minor">
-                            @foreach (var playeritem in item.PlayerItems)
-                            {
-                                if(playeritem.url != "" && playeritem.url != null)
-                                {
-                                    <img src="@Url.Content(String.Format("{0}", playeritem.url))" height="36" width="36">
-                                }
-                    
-                            }
+                             @foreach (var playeritem in item.PlayerItems)
+                             {
+                                <img src="@Url.Content(String.Format("{0}", playeritem.Item.ItemUrl))" height="36" width="36">               
+                             }
                         </td>
                     </tr>
                     }

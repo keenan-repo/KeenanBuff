@@ -3,17 +3,60 @@ html {
     font-family: "Lucida Grande", Tahoma, Verdana, Arial, sans-serif;
 }
 
-lead {
-    color: black;
-}
 
 body {
     padding-top: 50px;
     padding-bottom: 20px;
-    background-color: #222B34;
-    color:#fff;
+    background: #172340;
+    background-image: url("../assets/background.png");
+    background-repeat: no-repeat;
+    background-size: 100%;
+    color: #dddddd;
 }
 
+.intro.wrapper {
+    overflow: hidden;
+    width: 100%;
+    background: #0c0c0c4d;
+}
+.intro.left{
+    color: white;
+    float: left;
+    width: 30%
+}
+
+.intro.left img {
+    width: 100%;
+    padding: 20px;
+}
+
+.intro.right {
+    float: right;
+    overflow: hidden;
+    width: 70%;
+    right: 0px;
+    font-size: 20px;
+}
+.intro.right li {
+    display: block;
+    padding: 5px;
+}
+    .intro.right li:before {
+        /*Using a Bootstrap glyphicon as the bullet point*/
+        content: "\e080";
+        font-family: 'Glyphicons Halflings';
+        font-size: 14px;
+        float: left;
+        margin-top: 4px;
+        margin-left: -17px;
+        color: #CCCCCC;
+    }
+
+.jumbotron {
+    background-color: #eeeeeeb0;
+    margin-top: 20px;
+    font-size: 60px
+}
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
@@ -34,6 +77,17 @@ textarea {
     max-width: 280px;
 }
 
+.nav > li > a {
+    color: white;
+}
+
+.nav > li > a:hover {
+    color: black;
+}
+
+.navbar-brand {
+    font-size: 20px;
+}
 
 section article {
     box-shadow: 0 0 3px rgba(10,10,10,0.4);
@@ -44,14 +98,17 @@ section article {
     clear: right;
 }
 
+iframe{
+    width: 100%;
+    height: 720px;
+}
 
 table {
     width: 100%;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 table th, table td {
-    padding: 4px;
     text-align: left;
     vertical-align: middle;
 }
@@ -135,7 +192,7 @@ table tbody tr:nth-child(2n).faction-radiant {
 .header-content-container{
     box-shadow: 0 0 3px rgba(10,10,10,0.4);
     border-radius: 1px;
-    margin: 13px 0 0 0;
+    margin: 13px 0 13px 0;
 }
 
 .header-content{
