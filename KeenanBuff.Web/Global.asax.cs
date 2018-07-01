@@ -16,7 +16,6 @@ namespace KeenanBuff
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            SteamAPI.Start.Init();
         }
 
         protected void Application_BeginRequest()

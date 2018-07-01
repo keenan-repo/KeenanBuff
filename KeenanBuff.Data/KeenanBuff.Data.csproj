@@ -112,9 +112,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context\Context.cs" />
-    <Compile Include="Migrations\201803171930311_initial.cs" />
-    <Compile Include="Migrations\201803171930311_initial.Designer.cs">
-      <DependentUpon>201803171930311_initial.cs</DependentUpon>
+    <Compile Include="Migrations\201807011536197_initial.cs" />
+    <Compile Include="Migrations\201807011536197_initial.Designer.cs">
+      <DependentUpon>201807011536197_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -128,7 +128,6 @@
     <Compile Include="SteamAPI\APIModels\RootObject.cs" />
     <Compile Include="SteamAPI\APIModels\SteamPlayer.cs" />
     <Compile Include="SteamAPI\DatabaseActions.cs" />
-    <Compile Include="SteamAPI\Start.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KeenanBuff.Entities\KeenanBuff.Entities.csproj">
@@ -137,8 +136,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201803171930311_initial.resx">
-      <DependentUpon>201803171930311_initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201807011536197_initial.resx">
+      <DependentUpon>201807011536197_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

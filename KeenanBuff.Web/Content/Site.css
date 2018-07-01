@@ -103,6 +103,13 @@ iframe{
     height: 720px;
 }
 
+.kda-bars {
+    vertical-align: middle;
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 0 2px;
+}
+
 table {
     width: 100%;
     font-size: 14px;
@@ -164,12 +171,6 @@ table.fixed .tf-items {
     width: 245px;
 }
 
-table .single-lines {
-    max-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
 
 table tbody tr:nth-child(2n) {
     background: rgba(255,255,255,0.02);

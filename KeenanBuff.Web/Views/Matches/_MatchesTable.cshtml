@@ -22,7 +22,7 @@
                             <div class="r-fluid r-40 r-icon-text">
                                 <div class="r-body">
                                     <div class="image-container image-container-hero image-container-icon">
-                                        <img src="@Url.Content(String.Format("../../assets/{0}.png", MatchDetail.HeroId))" height="24" width="42">
+                                        <img src="@Url.Content(MatchDetail.Hero.HeroUrl)" height="24" width="42">
                                     </div>
                                         <a class="won" href="@Url.Content(String.Format("../../Matches/Details/{0}", item.MatchID))">@Html.DisplayFor(modelitem => MatchDetail.Hero.HeroName)</a>
                                     <div class="subtext">

@@ -8,10 +8,10 @@ namespace KeenanBuff.Models
 {
     public class PlayerOverview
     {
-        public string Hero { get; set; }
-        public string LastMatch { get; set; }
-        public int Matches { get; set; }
-        public double WinRate { get; set; }
-        public double Kda { get; set; }
+        public List<HeroStat> HeroStats { get; set; }
+        public List<WinRatePoint> WinRate { get; set; }
+        public string OverallWinrate { get; set; }
+        public string OverallWonMatches { get; set; }
+        public string OverallLostMatches { get; set; }
     }
 }

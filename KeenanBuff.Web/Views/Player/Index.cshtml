@@ -1,0 +1,34 @@
+﻿@model KeenanBuff.Models.PlayerOverview
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Account Overview</h2>
+
+
+<section>
+    <div class="container">
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#heroes">Heroes</a></li>
+            <li><a data-toggle="tab" href="#graphs">Graphs</a></li>
+        </ul>
+
+        <div class="tab-content">
+
+            <div id="heroes" class="tab-pane fade in active">
+                <header>
+                    Most Played Heroes
+                </header>
+                @Html.Partial("_TopHeroes")
+            </div>
+
+            <div id="graphs" class="tab-pane fade">
+                <header>
+                    Win Rate
+                </header>
+            </div>
+        </div>
+    </div>
+</section>
+

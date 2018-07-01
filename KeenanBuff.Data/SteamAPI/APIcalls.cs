@@ -13,11 +13,12 @@ namespace KeenanBuff.Data.SteamAPI
         public static string API_KEY = "FECFA52826DCE092D6752CA087B111F8";
 
 
-        public static APIModels.Result getMatchHistory(long ID)
+        public static APIModels.Result GetMatchHistory(long ID, long start_match_id)
         {
-            int num_matches = 20;
+            int num_matches = 2;
             string URL_Domain_MatchHistory = "https://api.steampowered.com";
-            string URL_history = "/IDOTA2Match_570/GetMatchHistory/V001" + "?key=" + SteamAPI.APIcalls.API_KEY + "&account_id=" + ID + "&matches_requested=" + num_matches;
+            string URL_history = "/IDOTA2Match_570/GetMatchHistory/V001" + "?key=" + SteamAPI.APIcalls.API_KEY 
+                + "&account_id=" + ID + "&matches_requested=" + num_matches + "&start_at_match_id=" + start_match_id;
 
             var client = new RestClient(URL_Domain_MatchHistory);
             var request = new RestRequest(URL_history, Method.GET);
@@ -74,7 +75,7 @@ namespace KeenanBuff.Data.SteamAPI
             string steam_name = "Anonymous";
             Int64 SteamID = account_id + 76561197960265728;
 
-            if (SteamID == 76561202255233023) //a little arbitrary but this defines an anon account. TODO: Improve this
+            if (SteamID == 76561202255233023) //a little arbitrary but this defines an anon account.
             {
                 return steam_name;
             }

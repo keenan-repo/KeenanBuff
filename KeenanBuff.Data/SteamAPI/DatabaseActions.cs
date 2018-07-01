@@ -18,11 +18,11 @@ namespace KeenanBuff.Data.SteamAPI
             if (System.Diagnostics.Debugger.IsAttached == false)
             {
 
-               System.Diagnostics.Debugger.Launch();
+                //System.Diagnostics.Debugger.Launch();
 
-            }     
+            }
 
-            var Matches = new List<Entities.Match>();
+
 
 
             //convert the API models into the ViewModels
@@ -37,14 +37,22 @@ namespace KeenanBuff.Data.SteamAPI
             {
                 ItemId = x.id,
                 Name = x.localized_name,
-                ItemUrl = "http://cdn.dota2.com/apps/dota2/images/items/" + x.name.Remove(0,5) + "_lg.png"
+                ItemUrl = "http://cdn.dota2.com/apps/dota2/images/items/" + x.name.Remove(0, 5) + "_lg.png"
             }).ToList();
 
             gameItems.Add(new Entities.Item { ItemId = 0, Name = "Empty", ItemUrl = "None" });
 
+
+            var databaseItems = context.Items.Select(x => x.ItemUrl);
+            gameItems = gameItems.Where(i => !databaseItems.Contains(i.ItemUrl)).ToList();
+
+            var databaseHeroes = context.Heroes.Select(x => x.HeroName);
+            heroes = heroes.Where(i => !databaseHeroes.Contains(i.HeroName)).ToList();
             //add to the db
             gameItems.ForEach(s => context.Items.AddOrUpdate(s));
             heroes.ForEach(s => context.Heroes.AddOrUpdate(s));
+
+            context.SaveChanges();
 
 
 
@@ -52,15 +60,29 @@ namespace KeenanBuff.Data.SteamAPI
             //Write to match details table. This uses the matchIDs from above, 
             //itterates through them, grabs the details and creates a match
             var account_id = 90935174; //this is my account!
-            foreach (var game in APIcalls.getMatchHistory(account_id).matches)
+            var matchesCount = 300;
+            for (int i = 0; i < matchesCount; i++)
+            {
+                var startmatchid = context.Matches.OrderBy(m => m.MatchID).Select(x => x.MatchID).FirstOrDefault();
+                var matches = APIcalls.GetMatchHistory(account_id, startmatchid).matches;
+                var databaseMatches = context.Matches.Select(x => x.MatchID);
+                matches = matches.Where(m => !databaseMatches.Contains(m.match_id)).ToList();
+                if (matches.Any())
+                {
+                    var count = i;
+                    AddorUpdateMatches(context, matches);
+                }
+   
+            }
+
+        }
+
+        private void AddorUpdateMatches(ApplicationDbContext context, List<APIModels.Match> matches)
+        {
+            var Matches = new List<Entities.Match>();
+            foreach (var game in matches)
             {
                 var apiMatchDetails = APIcalls.getMatchDetails(game.match_id);
-
-                //if the game is already there, skip
-                if (context.Matches.Any(m => m.MatchID == game.match_id))
-                {
-                    continue;
-                }
 
                 var MatchDetails = new List<MatchDetail>();
 
@@ -70,7 +92,7 @@ namespace KeenanBuff.Data.SteamAPI
                     var PlayerItems = new List<Entities.PlayerItem>() {
                         new PlayerItem {
                             ItemId = item.item_0
-                        }, 
+                        },
                         new PlayerItem {
                             ItemId = item.item_1,
                         },
@@ -92,7 +114,7 @@ namespace KeenanBuff.Data.SteamAPI
                         PlayerID = item.account_id,
                         MatchID = game.match_id,
                         PlayerSlot = item.player_slot,
-                        HeroId = item.hero_id,
+                        HeroId = item.hero_id, //TODO make some mapping cause valve doesn't map the hero
                         PlayerItems = PlayerItems,
                         Kills = item.kills,
                         Deaths = item.deaths,
@@ -134,13 +156,13 @@ namespace KeenanBuff.Data.SteamAPI
                     DireScore = apiMatchDetails.result.dire_score,
                     MatchDetails = MatchDetails
                 };
-        
+
                 MatchDetails.ForEach(s => context.MatchDetails.AddOrUpdate(s));
                 Matches.Add(match);
                 //onto the next game!
             }
-
             Matches.ForEach(s => context.Matches.AddOrUpdate(s));
+            context.SaveChanges();
         }
 
 

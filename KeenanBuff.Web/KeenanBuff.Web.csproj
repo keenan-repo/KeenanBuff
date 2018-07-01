@@ -246,6 +246,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MatchesController.cs" />
+    <Compile Include="Controllers\PlayerController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -409,22 +410,20 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Service References\Application Insights\ConnectedService.json" />
     <Content Include="Views\Matches\Details.cshtml" />
     <Content Include="Views\Matches\Index.cshtml" />
-    <Content Include="Views\Players\Delete.cshtml" />
-    <Content Include="Views\Players\Details.cshtml" />
-    <Content Include="Views\Players\_Graph.cshtml" />
-    <Content Include="Views\Players\Index.cshtml" />
-    <Content Include="Views\Players\_Matches.cshtml" />
-    <Content Include="Views\Players\_Overview.cshtml" />
+    <Content Include="Views\Player\Delete.cshtml" />
+    <Content Include="Views\Player\Details.cshtml" />
+    <Content Include="Views\Player\_Graph.cshtml" />
+    <Content Include="Views\Player\Index.cshtml" />
+    <Content Include="Views\Player\_Matches.cshtml" />
+    <Content Include="Views\Player\_TopHeroes.cshtml" />
     <Content Include="Views\Matches\_MatchTable.cshtml" />
     <Content Include="Views\Matches\_MatchesTable.cshtml" />
     <Content Include="Views\Home\Arcade.cshtml" />
-    <Content Include="Views\Matches\_NewMatchesTable.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="assets\NewFolder1\" />

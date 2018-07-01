@@ -53,9 +53,9 @@
                             @Html.DisplayFor(modelItem => item.XpPerMin)
                         </td>
                         <td class="tf-r r-tab r-group-2 cell-minor">
-                             @foreach (var playeritem in item.PlayerItems)
+                             @foreach (var playeritem in item.PlayerItems.Where(i => i.Item.ItemUrl != "None"))
                              {
-                                <img src="@Url.Content(String.Format("{0}", playeritem.Item.ItemUrl))" height="36" width="36">               
+                                <img src="@Url.Content(String.Format("{0}", playeritem.Item.ItemUrl))" height="40%">               
                              }
                         </td>
                     </tr>
@@ -119,9 +119,9 @@
                             @Html.DisplayFor(modelItem => item.XpPerMin)
                         </td>
                         <td class="tf-r r-tab r-group-2 cell-minor">
-                             @foreach (var playeritem in item.PlayerItems)
+                             @foreach (var playeritem in item.PlayerItems.Where(i => i.Item.ItemUrl != "None"))
                              {
-                                <img src="@Url.Content(String.Format("{0}", playeritem.Item.ItemUrl))" height="36" width="36">               
+                                <img src="@Url.Content(String.Format("{0}", playeritem.Item.ItemUrl))" height="40%">               
                              }
                         </td>
                     </tr>

@@ -109,7 +109,6 @@
   <ItemGroup>
     <Compile Include="AccountViewModels.cs" />
     <Compile Include="Hero.cs" />
-    <Compile Include="HeroOverview.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="Match.cs" />
     <Compile Include="MatchDetail.cs" />

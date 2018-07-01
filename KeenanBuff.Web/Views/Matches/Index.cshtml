@@ -11,7 +11,6 @@
             <div class="header-content-title">
                 <h1>
                     Recent Matches
-                    <small>Last 20</small>
                 </h1>
             </div>
         </div>
@@ -21,46 +20,11 @@
 
 <section>
     <div class="container">
-        <ul class="nav nav-tabs">
-            <li class="active"><a data-toggle="tab" href="#matches">Matches</a></li>
-            <li><a data-toggle="tab" href="#heroes">Heroes</a></li>
-            <li><a data-toggle="tab" href="#graphs">Graphs</a></li>
-        </ul>
-
-        <div class="tab-content">
-
             <div id="matches" class="tab-pane fade in active">
                 <header>
                     Latest Matches
                 </header>
                 @Html.Partial("_MatchesTable")
             </div>
-
-            <div id="heroes" class="tab-pane fade">
-                @Html.Partial("_NewMatchesTable")
-            </div>
-
-            <div id="graphs" class="tab-pane fade">
-                <header>
-                    Latest Matches
-                </header>
-                
-            </div>
-        </div>
     </div>
-
-
 </section>
-
-
-<div class="content-inner">
-    <section>
-        <header>All Heroes, Any Mode, Any Lobby, Any Skill, Any Region</header>
-        <footer>
-            <div class="filter">
-            </div>
-        </footer>
-
-        
-    </section>
-</div>
