@@ -2,65 +2,58 @@
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Collections.Generic;
-using KeenanBuff.Data.SteamAPI.APIModels;
 using KeenanBuff.Data.Context;
 using KeenanBuff.Entities;
+using System.Configuration;
 
 namespace KeenanBuff.Data.SteamAPI
 {
-    internal class DatabaseActions //: IDatabaseActions
+    internal class SeedDatabase
     {
-
-
         public void Update(ApplicationDbContext context)
         {
 
             if (System.Diagnostics.Debugger.IsAttached == false)
             {
 
-                //System.Diagnostics.Debugger.Launch();
+                System.Diagnostics.Debugger.Launch();
 
             }
 
 
-
-
             //convert the API models into the ViewModels
-            var heroes = APIcalls.getHeroes().Select(x => new Entities.Hero()
+            var heroes = APIcalls.GetHeroes().Select(x => new Hero()
             {
                 HeroId = x.id,
                 HeroName = x.localized_name,
                 HeroUrl = GetHeroURL(x.name),
             }).ToList();
 
-            var gameItems = APIcalls.getItems().Select(x => new Entities.Item()
+            var gameItems = APIcalls.GetItems().Select(x => new Item()
             {
                 ItemId = x.id,
                 Name = x.localized_name,
                 ItemUrl = "http://cdn.dota2.com/apps/dota2/images/items/" + x.name.Remove(0, 5) + "_lg.png"
             }).ToList();
 
-            gameItems.Add(new Entities.Item { ItemId = 0, Name = "Empty", ItemUrl = "None" });
+            gameItems.Add(new Item { ItemId = 0, Name = "Empty", ItemUrl = "None" });
 
-
+            //Download items
             var databaseItems = context.Items.Select(x => x.ItemUrl);
             gameItems = gameItems.Where(i => !databaseItems.Contains(i.ItemUrl)).ToList();
 
+            //Download Heroes
             var databaseHeroes = context.Heroes.Select(x => x.HeroName);
             heroes = heroes.Where(i => !databaseHeroes.Contains(i.HeroName)).ToList();
+
             //add to the db
             gameItems.ForEach(s => context.Items.AddOrUpdate(s));
             heroes.ForEach(s => context.Heroes.AddOrUpdate(s));
 
             context.SaveChanges();
 
-
-
-
-            //Write to match details table. This uses the matchIDs from above, 
-            //itterates through them, grabs the details and creates a match
             var account_id = 90935174; //this is my account!
-            var matchesCount = 300;
+            var matchesCount = 5;
             for (int i = 0; i < matchesCount; i++)
             {
                 var startmatchid = context.Matches.OrderBy(m => m.MatchID).Select(x => x.MatchID).FirstOrDefault();
@@ -82,7 +75,7 @@ namespace KeenanBuff.Data.SteamAPI
             var Matches = new List<Entities.Match>();
             foreach (var game in matches)
             {
-                var apiMatchDetails = APIcalls.getMatchDetails(game.match_id);
+                var apiMatchDetails = APIcalls.GetMatchDetails(game.match_id);
 
                 var MatchDetails = new List<MatchDetail>();
 
@@ -136,16 +129,16 @@ namespace KeenanBuff.Data.SteamAPI
                     MatchDetails.Add(MatchDetail);
                 }
 
-                var match = new Entities.Match
+                var match = new Match
                 {
                     MatchID = game.match_id,
                     MatchSeqNum = game.match_id, //I don't really know why I need this but I have it just incase
                     StartTime = UnixTimeStampToDateTime(apiMatchDetails.result.start_time),
                     LobbyType = apiMatchDetails.result.lobby_type,
-                    LobbyString = getLobbyString(apiMatchDetails.result.lobby_type),
+                    LobbyString = GetLobbyString(apiMatchDetails.result.lobby_type),
                     RadiantWin = apiMatchDetails.result.radiant_win,
                     GameMode = apiMatchDetails.result.game_mode,
-                    GameModeString = getGameMode(apiMatchDetails.result.game_mode),
+                    GameModeString = GetGameMode(apiMatchDetails.result.game_mode),
                     Duration = apiMatchDetails.result.duration,
                     TowerStatusDire = apiMatchDetails.result.tower_status_dire,
                     TowerStatusRadiant = apiMatchDetails.result.tower_status_radiant,
@@ -162,12 +155,21 @@ namespace KeenanBuff.Data.SteamAPI
                 //onto the next game!
             }
             Matches.ForEach(s => context.Matches.AddOrUpdate(s));
-            context.SaveChanges();
+
+            try
+            {
+                context.SaveChanges();
+            }
+            catch (Exception)
+            {
+                //create a logging class
+            }
+            
         }
 
 
         //Helper classes
-        private string getLobbyString(int lobby_type) {
+        private string GetLobbyString(int lobby_type) {
             Dictionary<int, string> lobbyString = new Dictionary<int, string>()
             {
                 {-1, "Invalid"},
@@ -192,7 +194,7 @@ namespace KeenanBuff.Data.SteamAPI
 
          }
 
-        private string getGameMode(int game_mode)
+        private string GetGameMode(int game_mode)
         {
             Dictionary<int, string> gameString = new Dictionary<int, string>()
             {

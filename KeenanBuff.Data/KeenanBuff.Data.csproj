@@ -97,7 +97,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <Content Include="SteamAPI\heroes.json" />
     <None Include="App.Debug.config">
       <DependentUpon>App.config</DependentUpon>
     </None>
@@ -127,7 +126,7 @@
     <Compile Include="SteamAPI\APIModels\Result.cs" />
     <Compile Include="SteamAPI\APIModels\RootObject.cs" />
     <Compile Include="SteamAPI\APIModels\SteamPlayer.cs" />
-    <Compile Include="SteamAPI\DatabaseActions.cs" />
+    <Compile Include="SteamAPI\SeedDatabase.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KeenanBuff.Entities\KeenanBuff.Entities.csproj">

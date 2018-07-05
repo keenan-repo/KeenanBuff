@@ -16,8 +16,6 @@ namespace KeenanBuff.Controllers
         {
             var playerOverview = new PlayerOverview();
 
-            var heroes = db.MatchDetails.Where(x => x.PlayerID == 90935174).Select(h => h.Hero).Distinct().ToList();
-
             var matches = db.MatchDetails.Where(x => x.PlayerID == 90935174);
 
             var wonMatches = db.MatchDetails
@@ -71,7 +69,7 @@ namespace KeenanBuff.Controllers
 
                 if (totalGames > 0)
                 {
-                    var winratepoint = new WinRatePoint { Date = day, WinRate = wins * 100.0 / totalGames };
+                    var winratepoint = new WinRatePoint { Date = day.ToString("yyyy/MM/dd"), WinRate = wins * 100.0 / totalGames };
                     WinRate.Add(winratepoint);
                 }
             }

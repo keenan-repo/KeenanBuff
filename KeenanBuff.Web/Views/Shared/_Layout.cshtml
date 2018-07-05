@@ -14,16 +14,19 @@
 
 </head>
 <body>
+
+
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
-            <div class="navbar-header">
-                @Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                @Html.ActionLink("Matches", "Index", "Matches", new { area = "" }, new { @class = "navbar-brand" })
-                @Html.ActionLink("Player Overview", "Index", "Player", new { area = "" }, new { @class = "navbar-brand" })
-                @Html.ActionLink("Arcade", "Arcade", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "navbar-brand active" })</li>
+                <li>@Html.ActionLink("Matches", "Index", "Matches", new { area = "" }, new { @class = "nav-item" })</li>
+                <li>@Html.ActionLink("Player Overview", "Index", "Player", new { area = "" }, new { @class = "nav-item" })</li>
+                <li>@Html.ActionLink("Arcade", "Arcade", "Home", new { area = "" }, new { @class = "navbar-nav" })</li>
+            </ul>
         </div>
     </div>
+
     <div class="container body-content">
         @RenderBody()
         <hr />
@@ -34,7 +37,6 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/Scripts/Chart.js")
     @RenderSection("scripts", required: false)
 </body>
 </html>

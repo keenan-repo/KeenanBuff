@@ -11,7 +11,7 @@
     <div class="container">
         <ul class="nav nav-tabs">
             <li class="active"><a data-toggle="tab" href="#heroes">Heroes</a></li>
-            <li><a data-toggle="tab" href="#graphs">Graphs</a></li>
+            <li><a data-toggle="tab" href="#graphs">Win Rate</a></li>
         </ul>
 
         <div class="tab-content">
@@ -24,9 +24,15 @@
             </div>
 
             <div id="graphs" class="tab-pane fade">
-                <header>
-                    Win Rate
-                </header>
+                <svg width="910" height="500" id="WinRate" style="background:#242f39"></svg>
+
+                <script type="text/javascript" src="~/Scripts/WinRateChart.js"></script>
+                <script type="text/javascript">
+                    var model = '@Html.Raw(Json.Encode(Model.WinRate))';
+                    var data = JSON.parse(model);
+                    WinRateChart.init([data, "#WinRate"]);
+                    WinRateChart.drawChart();
+                </script>
             </div>
         </div>
     </div>
