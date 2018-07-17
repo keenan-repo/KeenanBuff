@@ -1,19 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using KeenanBuff.Common.Logger.Interfaces;
 using System.Web.Mvc;
-using KeenanBuff.Models;
-using Hangfire;
-using KeenanBuff.Data.Context;
+
 
 namespace KeenanBuff.Controllers
 {
 
     public class HomeController : Controller
     {
+        private readonly IFileLogger _fileLogger;
 
-        private ApplicationDbContext db = new ApplicationDbContext();
+        public HomeController(IFileLogger fileLogger)
+        {
+            _fileLogger = fileLogger;
+        }
+
         public ActionResult Index()
         {
             return View();

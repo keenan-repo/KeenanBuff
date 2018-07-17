@@ -47,6 +47,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.8.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.8.1\lib\net45\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac.Integration.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.Mvc5.4.0.2\lib\net45\Autofac.Integration.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="AWSSDK, Version=2.3.55.0, Culture=neutral, PublicKeyToken=9f476d3089b52be3, processorArchitecture=MSIL">
       <HintPath>..\packages\AWSSDK.2.3.55.0\lib\net45\AWSSDK.dll</HintPath>
       <Private>True</Private>
@@ -123,10 +129,6 @@
     </Reference>
     <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
-    </Reference>
-    <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\RestSharp.105.2.3\lib\net46\RestSharp.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -243,7 +245,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\OwinStartup.cs" />
+    <Compile Include="App_Start\AutofacConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MatchesController.cs" />
     <Compile Include="Controllers\PlayerController.cs" />
@@ -254,6 +257,8 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\background.png" />
+    <Content Include="assets\me.jpg" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\PagedList.css" />
@@ -268,6 +273,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Properties\PublishProfiles\KeenanBuff - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\KeenanBuff20160911085040.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Chart.js" />
@@ -310,9 +316,7 @@
     <Content Include="Views\Matches\_MatchesTable.cshtml" />
     <Content Include="Views\Home\Arcade.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="assets\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -328,9 +332,9 @@
     <Analyzer Include="..\packages\AWSSDK.ElasticBeanstalk.3.3.0\analyzers\dotnet\cs\AWSSDK.ElasticBeanstalk.CodeAnalysis.dll" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\KeenanBuff.Data\KeenanBuff.Data.csproj">
-      <Project>{59b388b2-74c5-41cf-a160-931a2c0e2842}</Project>
-      <Name>KeenanBuff.Data</Name>
+    <ProjectReference Include="..\KeenanBuff.Common\KeenanBuff.Common.csproj">
+      <Project>{1A07DBF9-3965-4EE2-8DF4-16530C8DE47A}</Project>
+      <Name>KeenanBuff.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\KeenanBuff.Entities\KeenanBuff.Entities.csproj">
       <Project>{e6bc8deb-2165-4e8d-a0a6-3ad0d57dd2f8}</Project>

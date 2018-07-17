@@ -12,7 +12,7 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using KeenanBuff.Models;
 
-namespace KeenanBuff
+namespace KeenanBuff.Web
 {
    /* public class EmailService : IIdentityMessageService
     {

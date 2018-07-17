@@ -1,4 +1,4 @@
-﻿using Microsoft.Owin;
+﻿/*using Microsoft.Owin;
 using Owin;
 using Hangfire;
 using System;
@@ -19,4 +19,4 @@ namespace KeenanBuff
             app.UseHangfireServer();
         }
     }
-}
+}*/

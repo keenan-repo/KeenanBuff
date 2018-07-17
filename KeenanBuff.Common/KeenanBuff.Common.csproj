@@ -78,6 +78,8 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Logger\Interfaces\IFileLogger.cs" />
+    <Compile Include="Logger\FileLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <PropertyGroup>

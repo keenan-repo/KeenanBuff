@@ -6,31 +6,44 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using KeenanBuff.Models;
-using KeenanBuff.Data.Context;
 using PagedList;
-using KeenanBuff.Entities;
+using KeenanBuff.Entities.Context.Interfaces;
+using KeenanBuff.Common.Logger.Interfaces;
 
 namespace KeenanBuff.Controllers
 {
     public class MatchesController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private readonly IKeenanBuffContext _context;
+        private readonly IFileLogger _fileLogger;
 
-        // GET: Matches
+        public MatchesController(IKeenanBuffContext context, IFileLogger fileLogger)
+        {
+            _context = context;
+            _fileLogger = fileLogger;
+        }
+
+
+        [OutputCache(Duration = 7200, VaryByParam = "none")]
         public ActionResult Index(int? page, int? heroId)
         {
             int pageSize = 10;
             int pageNumber = (page ?? 1);
-            var results = db.Matches
-                    .OrderByDescending(m => m.StartTime).ToPagedList(pageNumber, pageSize);
+            var results = _context.Matches.OrderByDescending(m => m.StartTime).Take(50).ToPagedList(pageNumber, pageSize);
 
-
-            if (heroId.HasValue)
+            try
             {
-                results = db.Matches.Where(m => m.MatchDetails.Where(md => md.HeroId == heroId && md.PlayerID == 90935174).Any())
-                    ?.OrderByDescending(m => m.StartTime).ToPagedList(pageNumber, pageSize);
+                if (heroId.HasValue)
+                {
+                    results = _context.Matches.Where(m => m.MatchDetails.Where(md => md.HeroId == heroId && md.PlayerID == 90935174).Any())
+                        ?.OrderByDescending(m => m.StartTime).ToPagedList(pageNumber, pageSize);
+                }
             }
+            catch (Exception e)
+            {
+                _fileLogger.Error(e.ToString());
+            }
+ 
 
             return View(results);
         }
@@ -38,7 +51,7 @@ namespace KeenanBuff.Controllers
         // GET: Matches/Details/5
         public ActionResult Details(long id)
         {
-            return View(db.Matches.Single(m => m.MatchID == id));
+            return View(_context.Matches.Single(m => m.MatchID == id));
             
         }
 

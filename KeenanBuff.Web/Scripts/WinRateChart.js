@@ -100,7 +100,7 @@
                     div.transition()
                         .duration(100)
                         .style("opacity", 1);
-                    div.html(parseTime(d.Date) + "<br/>" + d.WinRate)
+                    div.html(d.Date.toLocaleDateString("en-US") + "<br/>" + d.WinRate)
                         .style("left", (d3.event.pageX) + "px")
                         .style("top", (d3.event.pageY - 40) + "px");
                     

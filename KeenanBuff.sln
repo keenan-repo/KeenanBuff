@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2008
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeenanBuff.Web", "KeenanBuff.Web\KeenanBuff.Web.csproj", "{42631C36-A211-4C77-8F8D-BFFB54D662D9}"
 EndProject
@@ -12,10 +12,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeenanBuff.Common", "KeenanBuff.Common\KeenanBuff.Common.csproj", "{1A07DBF9-3965-4EE2-8DF4-16530C8DE47A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeenanBuff.Common.Tests", "KeenanBuff.Common.Tests\KeenanBuff.Common.Tests.csproj", "{EA1BDE20-A681-48F0-AED2-573A09A64473}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeenanBuff.Data", "KeenanBuff.Data\KeenanBuff.Data.csproj", "{59B388B2-74C5-41CF-A160-931A2C0E2842}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeenanBuff.Data.Tests", "KeenanBuff.Data.Tests\KeenanBuff.Data.Tests.csproj", "{EF6DF703-0D02-4B21-8F22-96E90CD16394}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeenanBuff.Models", "KeenanBuff.Models\KeenanBuff.Models.csproj", "{3FE7FFC4-BCF2-4A2C-9F2B-A32D056671D1}"
 EndProject
@@ -45,14 +41,6 @@ Global
 		{EA1BDE20-A681-48F0-AED2-573A09A64473}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA1BDE20-A681-48F0-AED2-573A09A64473}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA1BDE20-A681-48F0-AED2-573A09A64473}.Release|Any CPU.Build.0 = Release|Any CPU
-		{59B388B2-74C5-41CF-A160-931A2C0E2842}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{59B388B2-74C5-41CF-A160-931A2C0E2842}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{59B388B2-74C5-41CF-A160-931A2C0E2842}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{59B388B2-74C5-41CF-A160-931A2C0E2842}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EF6DF703-0D02-4B21-8F22-96E90CD16394}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EF6DF703-0D02-4B21-8F22-96E90CD16394}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EF6DF703-0D02-4B21-8F22-96E90CD16394}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EF6DF703-0D02-4B21-8F22-96E90CD16394}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3FE7FFC4-BCF2-4A2C-9F2B-A32D056671D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3FE7FFC4-BCF2-4A2C-9F2B-A32D056671D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3FE7FFC4-BCF2-4A2C-9F2B-A32D056671D1}.Release|Any CPU.ActiveCfg = Release|Any CPU

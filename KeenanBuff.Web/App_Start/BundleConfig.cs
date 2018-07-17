@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace KeenanBuff
+namespace KeenanBuff.Web
 {
     public class BundleConfig
     {
