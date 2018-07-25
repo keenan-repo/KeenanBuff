@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using KeenanBuff.Common.Logger.Interfaces;
+using KeenanBuff.Common.Queries.Interfaces;
 using KeenanBuff.Entities.Context.Interfaces;
 using KeenanBuff.Models;
 
@@ -11,13 +12,14 @@ namespace KeenanBuff.Controllers
     public class PlayerController : Controller
     {
         private readonly IKeenanBuffContext _context;
-
+        private readonly IQueries _queries;
         private readonly IFileLogger _fileLogger;
 
-        public PlayerController(IKeenanBuffContext context, IFileLogger fileLogger)
+        public PlayerController(IKeenanBuffContext context, IFileLogger fileLogger, IQueries queries)
         {
             _context = context;
             _fileLogger = fileLogger;
+            _queries = queries;
         }
 
         [OutputCache(Duration = 7200, VaryByParam = "none")]
@@ -34,10 +36,7 @@ namespace KeenanBuff.Controllers
         {
             try
             {
-                var matches = _context.MatchDetails.Where(x => x.PlayerID == 90935174);
-
-                var wonMatches = _context.MatchDetails
-                    .Where(x => x.PlayerID == 90935174 && ((x.PlayerSlot < 6 && x.Match.RadiantWin) || (x.PlayerSlot > 5 && !x.Match.RadiantWin)));
+                var matches = _queries.GetMyMatcheDetails();
 
                 var HeroStats = _context.MatchDetails
                     .Where(p => p.PlayerID == 90935174)
@@ -46,7 +45,7 @@ namespace KeenanBuff.Controllers
                     .Select(x => new
                     {
                         Hero = x.Hero,
-                        WinRate = (wonMatches.Count(h => h.Hero.HeroId == x.Hero.HeroId) * 100.0 / x.Count),
+                        WinRate = (_queries.GetWonMatches().Count(h => h.Hero.HeroId == x.Hero.HeroId) * 100.0 / x.Count),
                         Matches = x.Count,
                         LastMatch = matches.Where(h => h.Hero.HeroId == x.Hero.HeroId).Select(m => m.Match).OrderBy(d => d.StartTime).First(),
                         Kda = matches.Where(h => h.Hero.HeroId == x.Hero.HeroId).Average(a => a.Kills / (a.Deaths == 0 ? 1 : a.Deaths)),

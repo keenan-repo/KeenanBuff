@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace KeenanBuff.Entites.SteamAPI.APIModels
+namespace KeenanBuff.Common.SteamAPI.APIModels
 {
     public class DotaPlayer
     {

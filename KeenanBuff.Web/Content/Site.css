@@ -113,6 +113,7 @@ iframe{
 table {
     width: 100%;
     font-size: 14px;
+    margin-bottom: 10px;
 }
 
 table th, table td {
@@ -456,4 +457,18 @@ div.container-inner {
 
 .won, .positive {
     color: #A9CF54 !important;
+}
+
+div.reset-button {
+    float: right;
+
+}
+
+button.reset-button {
+    background-image: url('../assets/refresh.png');
+    padding: 16px;
+    background-size: 30px 30px;
+    background-repeat: no-repeat;
+    height: 30px;
+    width: 30px;
 }

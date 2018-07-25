@@ -31,17 +31,19 @@
         </div>
     </div>
 
-    <div class="intro wrapper">
+    <div class="documentation">
         <!--<p>This site is based off a code first approach to populate a database with my personal DotA history. Match data is pulled through
-        valve's API. Data comes in two parts, a general match response with high level details about the match and a match details
-        call that includes specific information on a given match for each player. In this case a match has a connected match details
-        list which includes a player and their items linked by a cross table of player-items.</p>
+        valve's API and comes in two parts, a general match response with high level details about the match and a match details
+        call that includes specific information on a given match for each player. In this case a match has a list of connected match details
+        which includes a player and their items linked by a cross table of player-items.</p>
         <!--insert image of api calls-->
         <!--<p>
-            The API calls are located in Data project under SteamAPI. I make use of the Rest Sharp package to simpilfy the process. Once the data
+            The API calls are located in Entities project under SteamAPI. I make use of the Rest Sharp package to simpilfy the process. Once the data
             is stored in an API model I then have to format it into a useable data structure. This is all done in the SeedDatabase class which is
             called when you perform an update-database command.
         </p>-->
+        <p>The data is then loading in the controller and passed to the views. I also make use of D3.js which is a javascript library useful 
+        for displaying data visually. </p>
     </div>
 
 

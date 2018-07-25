@@ -3,19 +3,27 @@ using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Collections.Generic;
 using KeenanBuff.Entities;
-using KeenanBuff.Entities.Context;
+using KeenanBuff.Entities.SteamAPI.Interfaces;
+using KeenanBuff.Entities.Context.Interfaces;
+using KeenanBuff.Common.SteamAPI.Interfaces;
 using KeenanBuff.Common.Logger.Interfaces;
-using KeenanBuff.Common.Logger;
 
-namespace KeenanBuff.Entites.SteamAPI
+namespace KeenanBuff.Common.SteamAPI
 {
-    internal class SeedDatabase
+    public class SeedDatabase : ISeedDatabase
     {
-        public FileLogger _fileLogger;
+        private readonly IFileLogger _fileLogger;
+        private readonly IApiCalls _apiCalls;
+        private readonly IKeenanBuffContext _context;
 
-        public void Update(KeenanBuffContext context)
+        public SeedDatabase(IKeenanBuffContext context, IApiCalls apiCalls)
         {
-            _fileLogger = new FileLogger();
+            _apiCalls = apiCalls;
+            _context = context;
+        }
+
+        public void Update(IKeenanBuffContext context, int NumOfMatches)
+        {
 
             if (System.Diagnostics.Debugger.IsAttached == false)
             {
@@ -24,17 +32,17 @@ namespace KeenanBuff.Entites.SteamAPI
 
             }
 
-            _fileLogger.Log("--- Begining Database Seed ---");
+            _fileLogger.Info("--- Begining Database Seed ---");
 
             //convert the API models into the ViewModels
-            var heroes = APIcalls.GetHeroes().Select(x => new Hero()
+            var heroes = _apiCalls.GetHeroes().Select(x => new Hero()
             {
                 HeroId = x.id,
                 HeroName = x.localized_name,
                 HeroUrl = GetHeroURL(x.name),
             }).ToList();
 
-            var gameItems = APIcalls.GetItems().Select(x => new Item()
+            var gameItems = _apiCalls.GetItems().Select(x => new Item()
             {
                 ItemId = x.id,
                 Name = x.localized_name,
@@ -64,41 +72,47 @@ namespace KeenanBuff.Entites.SteamAPI
                 _fileLogger.Error(e.ToString());
             }
 
-            var account_id = 90935174; //this is my account!
-            var matchesCount = 0;
+            var matchesCount = NumOfMatches;
+            //initially check for new matches. This will start with the 10 most recent
+            RetrieveMatchesAndDiff(context, null, "10");
+
+            //if no new matches exist, continue with older ones. 
             for (int i = 0; i < matchesCount; i++)
             {
-                var startmatchid = context.Matches.OrderBy(m => m.MatchID).Select(x => x.MatchID).FirstOrDefault();
-                var matches = APIcalls.GetMatchHistory(account_id, startmatchid).matches;
-                var databaseMatches = context.Matches.Select(x => x.MatchID);
-                matches = matches.Where(m => !databaseMatches.Contains(m.match_id)).ToList();
-                if (matches.Any())
-                {
-                    var count = i;
-                    try
-                    {
-                        AddorUpdateMatches(context, matches);
-                    }
-                    catch (Exception e)
-                    {
-
-                        _fileLogger.Error(e.ToString());
-                    }
-                    
-                }
-   
+                var startmatchid = context.Matches.OrderBy(m => m.MatchID).Select(x => x.MatchID).FirstOrDefault().ToString();
+                RetrieveMatchesAndDiff(context, startmatchid);
             }
 
-            _fileLogger.Log("Database Seed Complete");
-
+            _fileLogger.Info("Database Seed Complete");
         }
 
-        private void AddorUpdateMatches(KeenanBuffContext context, List<APIModels.Match> matches)
+        private void RetrieveMatchesAndDiff(IKeenanBuffContext context, string startmatchid = null, string NumberOfMatches = null)
         {
-            var Matches = new List<Entities.Match>();
+            var account_id = 90935174; //this is my account!
+            var matches = _apiCalls.GetMatchHistory(account_id, startmatchid, NumberOfMatches).matches;
+            var databaseMatches = context.Matches.Select(x => x.MatchID);
+            matches = matches.Where(m => !databaseMatches.Contains(m.match_id)).ToList();
+
+            if (matches.Any())
+            {
+                try
+                {
+                    AddorUpdateMatches(context, matches);
+                }
+                catch (Exception e)
+                {
+
+                    _fileLogger.Error(e.ToString());
+                }
+            }
+        }
+
+        private void AddorUpdateMatches(IKeenanBuffContext context, List<APIModels.Match> matches)
+        {
+            var Matches = new List<Match>();
             foreach (var game in matches)
             {
-                var apiMatchDetails = APIcalls.GetMatchDetails(game.match_id);
+                var apiMatchDetails = _apiCalls.GetMatchDetails(game.match_id);
 
                 var MatchDetails = new List<MatchDetail>();
 
@@ -181,7 +195,7 @@ namespace KeenanBuff.Entites.SteamAPI
 
             try
             {
-                _fileLogger.Log("Inserting " + Matches.Count() + " to the database");
+                _fileLogger.Info("Inserting " + Matches.Count() + " to the database");
                 context.SaveChanges();
             }
             catch (Exception e)
@@ -278,7 +292,6 @@ namespace KeenanBuff.Entites.SteamAPI
         {
             return "http://cdn.dota2.com/apps/dota2/images/heroes/" + name.Remove(0, 14) +"_sb.png";
         }
-
 
     }
 

@@ -9,7 +9,7 @@
 
 <article>
     <div class="r-table performances-overview">
-        <table>
+        <table class="matches">
             @foreach (var item in Model)
             {
                 var MatchDetail = item.MatchDetails.Single(p => p.PlayerID == 90935174);
@@ -78,10 +78,21 @@
                 </tr>
 
             }
+                
         </table>
-        <br />
-        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+        <div class="reset-button">
+            <button class="reset-button" onclick="Reload()" ></button>
+        </div>
+        <div>Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount</div>
+        
         @Html.PagedListPager(Model, page => Url.Action("Index",
     new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
     </div>
 </article>
+
+<script>
+    function Reload() {
+        $("#matchesTable").load("/Matches/_MatchesTable");
+        window.history.replaceState({}, document.title, "/" + "Matches");
+    }
+</script>
