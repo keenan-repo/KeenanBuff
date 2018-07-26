@@ -18,7 +18,9 @@ body {
     overflow: hidden;
     width: 100%;
     background: #0c0c0c4d;
+    padding: 20px;
 }
+
 .intro.left{
     color: white;
     float: left;
@@ -26,8 +28,8 @@ body {
 }
 
 .intro.left img {
+    padding-right: 20px;
     width: 100%;
-    padding: 20px;
 }
 
 .intro.right {
@@ -41,16 +43,58 @@ body {
     display: block;
     padding: 5px;
 }
-    .intro.right li:before {
-        /*Using a Bootstrap glyphicon as the bullet point*/
-        content: "\e080";
-        font-family: 'Glyphicons Halflings';
-        font-size: 14px;
-        float: left;
-        margin-top: 4px;
-        margin-left: -17px;
-        color: #CCCCCC;
-    }
+.intro.right li:before {
+    /*Using a Bootstrap glyphicon as the bullet point*/
+    content: "\e080";
+    font-family: 'Glyphicons Halflings';
+    font-size: 14px;
+    float: left;
+    margin-top: 4px;
+    margin-left: -17px;
+    color: #CCCCCC;
+}
+
+.documentation.wrapper {
+    overflow: hidden;
+    width: 100%;
+    background: #0c0c0c4d;
+    padding: 20px;
+}
+
+
+.documentation.left {
+    float: left;
+    overflow: hidden;
+    width: 24%
+}
+
+.documentation.image-container.right {
+    float: right;
+    width: 75%
+}
+
+
+.documentation.image-container.left {
+    float: left;
+    width: 69%
+}
+
+.documentation.left img {
+    padding-right: 20px;
+    width: 100%;
+}
+
+.documentation.right img {
+    padding-left: 20px;
+    width: 100%;
+}
+
+.documentation.right {
+    float: right;
+    overflow: hidden;
+    width: 30%;
+    right: 0px;
+}
 
 .jumbotron {
     background-color: #eeeeeeb0;

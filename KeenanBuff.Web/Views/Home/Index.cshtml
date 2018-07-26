@@ -8,15 +8,14 @@
     </div>
     <div class="intro wrapper">
         <div class="intro left">
-            <img src="~/assets/me.jpg" />
+            <img src="~/assets/me.jpg"/>
         </div>
         <div class="intro right">
-
             <h2>
                 Welcome to Keenan Buff
             </h2>
             <p>
-                I created this place to show case my abilites with C#, Javascript and Entity Framework.
+                I created this place to showcase my abilites with C#, Javascript and Entity Framework.
                 This is a code first Entity Framework approach documenting my match history in the popular video game DotA 2
             </p>
             <h2>
@@ -32,23 +31,61 @@
     </div>
 
     <div class="documentation">
-        <!--<p>This site is based off a code first approach to populate a database with my personal DotA history. Match data is pulled through
-        valve's API and comes in two parts, a general match response with high level details about the match and a match details
-        call that includes specific information on a given match for each player. In this case a match has a list of connected match details
-        which includes a player and their items linked by a cross table of player-items.</p>
-        <!--insert image of api calls-->
-        <!--<p>
-            The API calls are located in Entities project under SteamAPI. I make use of the Rest Sharp package to simpilfy the process. Once the data
-            is stored in an API model I then have to format it into a useable data structure. This is all done in the SeedDatabase class which is
-            called when you perform an update-database command.
-        </p>-->
-        <p>The data is then loading in the controller and passed to the views. I also make use of D3.js which is a javascript library useful 
-        for displaying data visually. </p>
+        <h2>How it works</h2>
+        <h3>Overview</h3>
+        <div class="documentation wrapper">
+            <div class="documentation center">
+                <p>
+                    This site is based off a code first approach to populate a database with my personal DotA history. Match data is pulled through
+                    valve's API and comes in two parts, a general match response with high level details about the match and a match details
+                    call that includes specific information on a given match for each player. In this case a match has a list of connected match details
+                    which includes a player and their items linked by a cross table of player-items.
+                </p>
+                <p>The solution is made up of 4 main projects (plus tests): Common, Entities, Models and Web.</p>
+                <ul>
+                    <li>Common holds most of the backend code that is utilized to pull match data, log errors and perform database queries.</li>
+                    <li>Entities contains all the models for the database objects.</li>
+                    <li>Models is the view models that are specific to the web page since these are usually different compare to the database models</li>
+                    <li>Web has all the code related to the actual webpages you see here and controllers that serve the data</li>
+                </ul>
+            </div>
+        </div>
+
+        <br>
+        <h3>Data Retrival</h3>
+        <div class="documentation wrapper">
+            <div class="documentation left">
+                <p>
+                    Data is initially pulled from the Valve servers through an ApiCalls class. I make use of the Rest Sharp package
+                    to simplify the process that's wrapped in my own Rest Client to reduce dependencies. These API calls are
+                    utilized by a seed database class that converts the valve data models into a more usable form.
+                </p>
+                <br />
+                <p>
+                    The seed database is called from a hidden page that will seed either the most recent 10 games or, if there are no new games
+                    it will pull the 10 previous games that are not in the database. It then maps each game connecting players to the match and
+                    details, such as items and hero, to the player.
+                </p>
+            </div>
+            <div class="documentation image-container right">
+                <img src="~/assets/ApiCalls.png" alt="Alternate Text" />
+            </div>
+        </div>
+        <h3>Database Design</h3>
+
+        <div class="documentation wrapper">
+            <div class="documentation right">
+                I've included a complete database diagram to show the design of the database. Matches are linked to match
+                details through MatchID. Each match has two teams, Radiant and Dire which consists of 5 players each. This means each match
+                will have 10 match details, 1 for each player, 10 players in total. Further, each player selects a hero, their playable character
+                and that hero can purchase up to 9 times. 
+            </div>
+            <div class="documentation image-container left">
+                <img src="~/assets/DatabaseDiagram.png" alt="Alternate Text" />
+            </div>
+        </div>
     </div>
 
 
-    </body>
-
-
-
+</body>
 

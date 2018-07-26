@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using RestSharp;
 using System.Configuration;
 using KeenanBuff.Common.SteamAPI.Interfaces;
 using KeenanBuff.Common.SteamAPI.APIModels;
@@ -78,3 +77,8 @@ namespace KeenanBuff.Common.SteamAPI
         }
     }
 }
+
+
+
+
+

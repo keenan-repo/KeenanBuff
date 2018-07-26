@@ -28,13 +28,11 @@ namespace KeenanBuff.Controllers
 
         public ActionResult Arcade()
         {
-           
             return View();
         }
 
         public ActionResult Database()
         {
-
             return View();
         }
 

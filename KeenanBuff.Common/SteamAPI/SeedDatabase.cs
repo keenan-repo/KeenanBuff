@@ -16,10 +16,11 @@ namespace KeenanBuff.Common.SteamAPI
         private readonly IApiCalls _apiCalls;
         private readonly IKeenanBuffContext _context;
 
-        public SeedDatabase(IKeenanBuffContext context, IApiCalls apiCalls)
+        public SeedDatabase(IKeenanBuffContext context, IApiCalls apiCalls, IFileLogger fileLogger)
         {
             _apiCalls = apiCalls;
             _context = context;
+            _fileLogger = fileLogger;
         }
 
         public void Update(IKeenanBuffContext context, int NumOfMatches)
