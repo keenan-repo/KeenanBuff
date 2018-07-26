@@ -5,7 +5,6 @@ html {
 
 
 body {
-    padding-top: 50px;
     padding-bottom: 20px;
     background: #172340;
     background-image: url("../assets/background.png");
@@ -14,18 +13,24 @@ body {
     color: #dddddd;
 }
 
-.intro.wrapper {
-    overflow: hidden;
-    width: 100%;
+div.left {
+    float: left;
+}
+
+div.right {
+    float: right;
+}
+
+div.wrapper {
     background: #0c0c0c4d;
+    overflow: hidden;
     padding: 20px;
 }
 
 .intro.left{
-    color: white;
-    float: left;
     width: 30%
 }
+
 
 .intro.left img {
     padding-right: 20px;
@@ -33,12 +38,15 @@ body {
 }
 
 .intro.right {
-    float: right;
-    overflow: hidden;
     width: 70%;
-    right: 0px;
-    font-size: 20px;
 }
+
+@media screen and (max-width: 500px) {
+    .intro.left, .intro.right {
+        width: 100%; /* The width is 100%, when the viewport is 800px or smaller */
+    }
+}
+
 .intro.right li {
     display: block;
     padding: 5px;
@@ -54,29 +62,20 @@ body {
     color: #CCCCCC;
 }
 
-.documentation.wrapper {
-    overflow: hidden;
-    width: 100%;
-    background: #0c0c0c4d;
-    padding: 20px;
+.DataRetrieval.left {
+    width: 30%;
 }
 
-
-.documentation.left {
-    float: left;
-    overflow: hidden;
-    width: 24%
+.DataRetrieval.right {
+    width: 69%;
 }
 
-.documentation.image-container.right {
-    float: right;
-    width: 75%
+.DatabaseDesign.left {
+    width: 69%;
 }
 
-
-.documentation.image-container.left {
-    float: left;
-    width: 69%
+.DatabaseDesign.right {
+    width: 30%;
 }
 
 .documentation.left img {
@@ -89,16 +88,23 @@ body {
     width: 100%;
 }
 
-.documentation.right {
-    float: right;
-    overflow: hidden;
-    width: 30%;
-    right: 0px;
+@media screen and (max-width: 500px) {
+    .documentation.left, .documentation.right {
+        width: 100%; /* The width is 100%, when the viewport is 800px or smaller */
+    }
+    .documentation.left img, .documentation.right img {
+        padding: 10px; /* The width is 100%, when the viewport is 800px or smaller */
+    }
+    .jumbotron {
+        background-color: #eeeeeeb0;
+        margin-top: 60px;
+        font-size: 50px;
+    }
 }
 
 .jumbotron {
     background-color: #eeeeeeb0;
-    margin-top: 20px;
+    margin-top: 60px;
     font-size: 60px
 }
 /* Set padding to keep content from hitting the edges */

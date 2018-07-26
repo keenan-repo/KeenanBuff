@@ -8,7 +8,6 @@ namespace KeenanBuff.Entities
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int ItemId { get; set; }
-
         public string Name { get; set; }
         public string ItemUrl { get; set; }
     }

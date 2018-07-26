@@ -269,6 +269,7 @@
   <ItemGroup>
     <Content Include="assets\ApiCalls.PNG" />
     <Content Include="assets\background.png" />
+    <Content Include="assets\DatabaseDiagram.PNG" />
     <Content Include="assets\me.jpg" />
     <Content Include="assets\refresh.png" />
     <Content Include="Content\bootstrap.css" />
