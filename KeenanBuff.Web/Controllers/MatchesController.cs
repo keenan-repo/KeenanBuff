@@ -21,7 +21,7 @@ namespace KeenanBuff.Controllers
         }
 
 
-        //[OutputCache(Duration = 7200, VaryByParam = "none")]
+        [OutputCache(Duration = 7200, VaryByParam = "heroId")]
         public ActionResult Index(int? page, int? heroId)
         {
             int pageSize = 10;
