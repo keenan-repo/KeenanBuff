@@ -5,131 +5,181 @@
         <header style="vertical-align: middle">
             The Radiant
         </header>
-        <article class="r-tabbed-table">
-            <table class="match-team-table r-tab-enabled fixed row-hints col-hints">
-                <thead>
-                    <tr class="col-hints">
-                        <th class="tf-hero">Hero</th>
-                        <th class="tf-a tf-pl">Player</th>
-                        <th class="tf-75 tf-r r-tab r-group-1 shown">Level</th>
-                        <th class="tf-75 tf-r r-tab r-group-1 shown">Score</th>
-                        <th class="tf-75 tf-r r-tab r-group-1 shown">Gold</th>
-                        <th class="tf-75 tf-r r-tab r-group-2">LH</th>
-                        <th class="tf-75 tf-pl r-tab r-group-2">Denies</th>
-                        <th class="tf-75 tf-r r-tab r-group-2">GPM</th>
-                        <th class="tf-75 tf-pl r-tab r-group-2">XPM</th>
-                        <th class="tf-items tf-r r-tab r-group-1 shown">Items</th>
+        <article class="">
+            <div class="r-table performances-overview">
+                <table class="matches">
+                    <thead>
+                        <tr class="col-hints">
+                            <th class="">Hero</th>
+                            <th class="">Player</th>
+                            <th class="">Level</th>
+                            <th class="">Score</th>
+                            <th class="">Gold</th>
+                            <th class="">LH</th>
+                            <th class="">Denies</th>
+                            <th class="">GPM</th>
+                            <th class="">XPM</th>
+                            <th class="r-none-tablet">Items</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model.MatchDetails.Where(i => i.PlayerSlot < 5).OrderBy(m => m.PlayerSlot))
+                {
+                    <tr>
+                        <td class="r-fluid r-5 r-icon-text">
+                            <div class="image-container image-container-hero image-container-icon">
+                                <img src="@Url.Content(item.Hero.HeroUrl)">
+                            </div>
+                        </td>
+                        <td class="r-fluid r-23">
+                            <div class="r-body">
+                                <span class="player-radiant">@Html.DisplayFor(modelItem => item.SteamName)</span>
+                            </div>
+                        </td>
+                        <td class="r-fluid r-8">
+                            <div class="r-body">
+                                @Html.DisplayFor(modelItem => item.Level)
+                            </div>
+                        </td>
+                        <td class="r-fluid r-8">
+                            <div class="r-body">
+                                @Html.DisplayFor(modelItem => item.Kills)/@Html.DisplayFor(modelItem => item.Deaths)/@Html.DisplayFor(modelItem => item.Assists)
+                            </div>
+                        </td>
+                        <td class="r-fluid r-8">
+                            <div class="r-body">
+                                @Html.DisplayFor(modelItem => item.Gold)
+                            </div>
+                        </td>
+                        <td class="r-fluid r-8">
+                            <div class="r-body">
+                                @Html.DisplayFor(modelItem => item.LastHits)
+                            </div>
+                        </td>
+                        <td class="r-fluid r-8">
+                            <div class="r-body">
+                                @Html.DisplayFor(modelItem => item.Denies)
+                            </div>
+                        </td>
+                        <td class="r-fluid r-5">
+                            <div class="r-body">
+                                @Html.DisplayFor(modelItem => item.GoldPerMin)
+                            </div>
+                        </td>
+                        <td class="r-fluid r-5">
+                            <div class="r-body">
+                                @Html.DisplayFor(modelItem => item.XpPerMin)
+                            </div>
+                        </td>
+                        <td class="tf-r r-tab r-group-2 cell-minor r-none-tablet">
+                            <div class="r-fluid r-30">
+                                @foreach (var playeritem in item.PlayerItems.Where(i => i.Item.ItemUrl != "None"))
+                        {
+                            <div class="image-container-item">
+                                <img class="image-item" src="@Url.Content(String.Format("{0}", playeritem.Item.ItemUrl))">
+                            </div>
+
+                }
+                            </div>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.MatchDetails.Where(i => i.PlayerSlot < 5).OrderBy(m => m.PlayerSlot))
-                    {
-                    <tr class="col-hints faction-radiant player--1">
-                        <td class="cell-fill-image party-cell">
-                            <img src="@Url.Content(item.Hero.HeroUrl)" height="24" width="42">
-                        </td>
-                        <td class="tf-pl single-lines">
-                            <span class="player-radiant">@Html.DisplayFor(modelItem => item.SteamName)</span>
-                        </td>
-                        <td class="tf-pl single-lines">
-                            @Html.DisplayFor(modelItem => item.Level)
-                        </td>
-                        <td class="tf-r r-tab r-group-1 shown">
-                            @Html.DisplayFor(modelItem => item.Kills)/@Html.DisplayFor(modelItem => item.Deaths)/@Html.DisplayFor(modelItem => item.Assists)
-                        </td>
-                        <td class="tf-r r-tab r-group-1 color-stat-gold shown">
-                            @Html.DisplayFor(modelItem => item.Gold)
-                        </td>
-                        <td class="tf-r r-tab r-group-2 cell-minor">
-                            @Html.DisplayFor(modelItem => item.LastHits)
-                        </td>
-                        <td class="tf-r r-tab r-group-2 cell-minor">
-                            @Html.DisplayFor(modelItem => item.Denies)
-                        </td>
-                        <td class="tf-r r-tab r-group-2 cell-minor">
-                            @Html.DisplayFor(modelItem => item.GoldPerMin)
-                        </td>
-                        <td class="tf-r r-tab r-group-2 cell-minor">
-                            @Html.DisplayFor(modelItem => item.XpPerMin)
-                        </td>
-                        <td class="tf-r r-tab r-group-2 cell-minor">
-                             @foreach (var playeritem in item.PlayerItems.Where(i => i.Item.ItemUrl != "None"))
-                             {
-                                <img src="@Url.Content(String.Format("{0}", playeritem.Item.ItemUrl))" height="40%">               
-                             }
-                        </td>
-                    </tr>
-                    }
-                </tbody>
-            </table>
+        }
+                    </tbody>
+                </table>
+            </div>
         </article>
     </section>
-                    
+
     <section class="dire">
         <header style="vertical-align: middle">
             The Dire
         </header>
-        <article class="r-tabbed-table">
-            <table class="match-team-table r-tab-enabled fixed row-hints col-hints">
-                <thead>
-                    <tr class="col-hints">
-                        <th class="tf-hero">Hero</th>
-                        <th class="tf-a tf-pl">Player</th>
-                        <th class="tf-75 tf-r r-tab r-group-1 shown">Level</th>
-                        <th class="tf-75 tf-r r-tab r-group-1 shown">Score</th>
-                        <th class="tf-75 tf-r r-tab r-group-1 shown">Gold</th>
-                        <th class="tf-75 tf-r r-tab r-group-2">LH</th>
-                        <th class="tf-75 tf-pl r-tab r-group-2">Denies</th>
-                        <th class="tf-75 tf-r r-tab r-group-2">GPM</th>
-                        <th class="tf-75 tf-pl r-tab r-group-2">XPM</th>
-                        <th class="tf-items tf-r r-tab r-group-1 shown">Items</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    
-                    @foreach (var item in Model.MatchDetails.Where(i => i.PlayerSlot > 5).OrderBy(m => m.PlayerSlot))
-                    {
-                    <tr class="col-hints faction-radiant player--1">
-                        <td class="cell-fill-image party-cell">
+        <article class="">
+            <div class="r-table performances-overview">
+                <table class="matches">
+                    <thead>
+                        <tr class="col-hints">
+                            <th class="">Hero</th>
+                            <th class="">Player</th>
+                            <th class="">Level</th>
+                            <th class="">Score</th>
+                            <th class="">Gold</th>
+                            <th class="">LH</th>
+                            <th class="">Denies</th>
+                            <th class="">GPM</th>
+                            <th class="">XPM</th>
+                            <th class="r-none-tablet">Items</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-                            <img src="@Url.Content(item.Hero.HeroUrl)" height="24" width="42">
-                        </td>
-                        <td class="tf-pl single-lines">
-                            <span class="player-radiant">@Html.DisplayFor(modelItem => item.SteamName)</span>
-                        </td>
-                        <td class="tf-pl single-lines">
-                            @Html.DisplayFor(modelItem => item.Level)
-                        </td>
-                        <td class="tf-r r-tab r-group-1 shown">
-                            @Html.DisplayFor(modelItem => item.Kills)/@Html.DisplayFor(modelItem => item.Deaths)/@Html.DisplayFor(modelItem => item.Assists)
-                        </td>
-                        <td class="tf-r r-tab r-group-1 color-stat-gold shown">
-                            @Html.DisplayFor(modelItem => item.Gold)
-                        </td>
-                        <td class="tf-r r-tab r-group-2 cell-minor">
-                            @Html.DisplayFor(modelItem => item.LastHits)
-                        </td>
-                        <td class="tf-r r-tab r-group-2 cell-minor">
-                            @Html.DisplayFor(modelItem => item.Denies)
-                        </td>
-                        <td class="tf-r r-tab r-group-2 cell-minor">
-                            @Html.DisplayFor(modelItem => item.GoldPerMin)
-                        </td>
-                        <td class="tf-r r-tab r-group-2 cell-minor">
-                            @Html.DisplayFor(modelItem => item.XpPerMin)
-                        </td>
-                        <td class="tf-r r-tab r-group-2 cell-minor">
-                             @foreach (var playeritem in item.PlayerItems.Where(i => i.Item.ItemUrl != "None"))
-                             {
-                                <img src="@Url.Content(String.Format("{0}", playeritem.Item.ItemUrl))" height="40%">               
-                             }
-                        </td>
-                    </tr>
-                    }
-                </tbody>
-            </table>
+                        @foreach (var item in Model.MatchDetails.Where(i => i.PlayerSlot > 5).OrderBy(m => m.PlayerSlot))
+                        {
+                            <tr>
+                                <td class="r-fluid r-5 r-icon-text">
+                                    <div class="image-container image-container-hero image-container-icon">
+                                        <img src="@Url.Content(item.Hero.HeroUrl)">
+                                    </div>
+                                </td>
+                                <td class="r-fluid r-20">
+                                    <div class="r-body">
+                                        <span class="player-radiant">@Html.DisplayFor(modelItem => item.SteamName)</span>
+                                    </div>
+                                </td>
+                                <td class="r-fluid r-8">
+                                    <div class="r-body">
+                                        @Html.DisplayFor(modelItem => item.Level)
+                                    </div>
+                                </td>
+                                <td class="r-fluid r-8">
+                                    <div class="r-body">
+                                        @Html.DisplayFor(modelItem => item.Kills)/@Html.DisplayFor(modelItem => item.Deaths)/@Html.DisplayFor(modelItem => item.Assists)
+                                    </div>
+                                </td>
+                                <td class="r-fluid r-8">
+                                    <div class="r-body">
+                                        @Html.DisplayFor(modelItem => item.Gold)
+                                    </div>
+                                </td>
+                                <td class="r-fluid r-8">
+                                    <div class="r-body">
+                                        @Html.DisplayFor(modelItem => item.LastHits)
+                                    </div>
+                                </td>
+                                <td class="r-fluid r-8">
+                                    <div class="r-body">
+                                        @Html.DisplayFor(modelItem => item.Denies)
+                                    </div>
+                                </td>
+                                <td class="r-fluid r-5">
+                                    <div class="r-body">
+                                        @Html.DisplayFor(modelItem => item.GoldPerMin)
+                                    </div>
+                                </td>
+                                <td class="r-fluid r-5">
+                                    <div class="r-body">
+                                        @Html.DisplayFor(modelItem => item.XpPerMin)
+                                    </div>
+                                </td>
+                                <td class="tf-r r-tab r-group-2 cell-minor r-none-tablet">
+                                    <div class="r-fluid r-30">
+                                        @foreach (var playeritem in item.PlayerItems.Where(i => i.Item.ItemUrl != "None"))
+                                        {
+                                            <div class="image-container-item">
+                                                <img class="image-item" src="@Url.Content(String.Format("{0}", playeritem.Item.ItemUrl))">
+                                            </div>
+
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         </article>
     </section>
-                    
+
 
 </div>

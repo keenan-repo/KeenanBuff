@@ -1,78 +1,55 @@
 ﻿@model KeenanBuff.Models.PlayerOverview
 
-<div class="content-inner">
-    <div class="row-12 player-summary">
-                <article>
-                    <div class="r-table performances-overview">
-
-                        <div class="r-row">
-                            <div class="r-fluid r-35 r-icon-text">
-                                <div class="r-body">
-                                    Hero
+<article>
+    <div class="r-table performances-overview content-inner">
+        <table class="matches">
+            <thead>
+                <tr>
+                    <th colspan="2">Hero</th>
+                    <th>Matches</th>
+                    <th>Win Rate</th>
+                    <th class="r-none-tablet">KDA</th>
+                </tr>
+            </thead>
+            @foreach (var item in Model.HeroStats)
+            {
+                <tr>
+                    <td class="r-fluid r-5 r-icon-text">
+                            <div class="r-body">
+                                <div class="image-container image-container-hero image-container-icon">
+                                    <img src="@Url.Content(String.Format(item.Hero.HeroUrl))" height="24" width="42">
                                 </div>
-                            </div> <!-- Hero, icon and last match -->
-                            <div class="r-fluid r-10 r-line-graph">
-                                <div class="r-label">
-                                    Matches
-                                </div>
-                            </div> <!-- Matches -->
-                            <div class="r-fluid r-10 r-line-graph">
-                                <div class="r-label">
-                                    Win %
-                                </div>
-                            </div> <!-- Win Rate -->
-                            <div class="r-fluid r-10 r-line-graph">
-                                <div class="r-body">
-                                    KDA
-                                </div>
-                            </div> <!-- KDA -->
+                            </div>
+                    </td>
+                    <td class="r-fluid r-20">
+                        <div class="r-none-mobile">
+                            @Html.ActionLink(item.Hero.HeroName, "Index", "Matches", new { heroId = item.Hero.HeroId }, null)
+                            <div class="subtext minor">
+                                Last Match: <a href="@Url.Content("/Matches/Details/" + String.Format(item.LastMatch.MatchID.ToString()))">
+                                    @item.LastMatch.StartTime.ToString("MM/dd/yyyy")
+                                </a>
+                            </div>
                         </div>
-                        @foreach (var item in Model.HeroStats)
-    {
-
-                        <div class="r-row">
-                            <div class="r-fluid r-35 r-icon-text">
-                                <div class="r-body">
-                                    <div class="image-container image-container-hero image-container-icon">
-                                        <img src="@Url.Content(String.Format(item.Hero.HeroUrl))" height="24" width="42">
-                                    </div>
-                                    <div class="r-none-mobile">
-                                        @Html.ActionLink(item.Hero.HeroName, "Index", "Matches", new { heroId = item.Hero.HeroId }, null)
-                                        <div class="subtext minor">
-                                            Last Match: <a href="@Url.Content("/Matches/Details/" + String.Format(item.LastMatch.MatchID.ToString()))">
-                                                @item.LastMatch.StartTime.ToString("MM/dd/yyyy")
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> <!-- Hero, icon and last match -->
-                            <div class="r-fluid r-10 r-line-graph">
-                                <div class="r-body">
-                                    @Html.DisplayFor(modelItem => item.Matches)
-                                </div>
-                            </div> <!-- Matches -->
-                            <div class="r-fluid r-10 r-line-graph">
-                                <div class="r-body">
-                                    @Html.DisplayFor(modelItem => item.WinRate) %
-                                </div>
-                            </div> <!-- Win Rate -->
-                            <div class="r-fluid r-10 r-line-graph">
-                                <div class="r-label">
-                                    @Html.DisplayFor(modelItem => item.Kda)
-                                </div>
-                            </div> <!-- KDA -->
-
-                            <div class="kda-bars">
-                                <div style="width:@(item.AverageKills+"px");height:3px;background-color:limegreen;margin-bottom:5px;"></div>
-                                <div style="width:@(item.AverageAssists+"px");height:3px;background-color:yellow;margin-bottom:5px;"></div>
-                                <div style="width:@(item.AverageDeaths+"px");height:3px;background-color:red;margin-bottom:5px;"></div>
-                            </div> <!-- KDA -->
+                    </td>
+                    <td class="r-fluid r-25 r-text-only r-right r-match-result">
+                        <div class="r-body">
+                            @Html.DisplayFor(modelItem => item.Matches)
                         </div>
-}
-                    </div>
-                </article>
+                    </td> <!-- Result-->
+                    <td class="game-mode r-fluid r-25 r-text-only r-first">
+                        <div class="r-body">
+                            @Html.DisplayFor(modelItem => item.WinRate) %
+                        </div>
+                    </td> <!--Type-->
+                    <td class="r-fluid r-25 r-duration">
+                        <div class="kda-bars r-none-tablet">
+                            <div style="width:@(item.AverageKills+"px");height:3px;background-color:limegreen;margin-bottom:5px;"></div>
+                            <div style="width:@(item.AverageAssists+"px");height:3px;background-color:yellow;margin-bottom:5px;"></div>
+                            <div style="width:@(item.AverageDeaths+"px");height:3px;background-color:red;margin-bottom:5px;"></div>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </table>
     </div>
-</div>
-
-
-
+</article>

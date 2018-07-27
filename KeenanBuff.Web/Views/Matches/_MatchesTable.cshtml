@@ -8,78 +8,99 @@
 
 
 <article>
-    <div class="r-table performances-overview">
+    <div class="r-table performances-overview ">
         <table class="matches">
+            <thead>
+                <tr>
+                    <th colspan="2">Hero</th>
+                    <th>Result</th>
+                    <th class="r-none-mobile">Type</th>
+                    <th>Duration</th>
+                    <th>KDA</th>
+                    <th class="r-none-tablet" style="min-width: 200px">Items</th>
+                </tr>
+            </thead>
             @foreach (var item in Model)
             {
                 var MatchDetail = item.MatchDetails.Single(p => p.PlayerID == 90935174);
                 int min = item.Duration / 60;
                 int seconds = item.Duration % 60;
 
-                <tr>
-                    <td>
-                        <div class="r-row">
-                            <div class="r-fluid r-40 r-icon-text">
-                                <div class="r-body">
-                                    <div class="image-container image-container-hero image-container-icon">
-                                        <img src="@Url.Content(MatchDetail.Hero.HeroUrl)" height="24" width="42">
-                                    </div>
-                                        <a class="won" href="@Url.Content(String.Format("../../Matches/Details/{0}", item.MatchID))">@Html.DisplayFor(modelitem => MatchDetail.Hero.HeroName)</a>
-                                    <div class="subtext">
-                                        High Skill
-                                    </div>
+            <tr>       
+                        <td class="r-fluid r-5 r-icon-text">
+                            <div class="r-body">
+                                <div class="image-container image-container-hero image-container-icon">
+                                    <img src="@Url.Content(MatchDetail.Hero.HeroUrl)">
                                 </div>
-                            </div> <!--Hero Icon-->
-                            <div class="r-fluid r-175 r-text-only r-right r-match-result">
-                                <div class="r-body">
-                                    @if ((item.RadiantWin && MatchDetail.PlayerSlot < 5) || (!item.RadiantWin && MatchDetail.PlayerSlot > 5))
-                                    {
-                                        <a class="won" href="@Url.Content(String.Format("../../Matches/Details/{0}", item.MatchID))">Won Match</a>
-                                    }
-                                    else
-                                    {
-                                        <a class="lost" href="@Url.Content(String.Format("../../Matches/Details/{0}", item.MatchID))">Lost Match</a>
-                                    }
+                            </div>
+                        </td> <!--Hero Icon-->
+                        <td class="r-fluid r-23 r-none-tablet">
+                            <a class="won" href="@Url.Content(String.Format("../../Matches/Details/{0}", item.MatchID))">@Html.DisplayFor(modelitem => MatchDetail.Hero.HeroName)</a>
+                            <div class="subtext">
+                                High Skill
+                            </div>
+                        </td>
+                        <td class="r-fluid r-125 r-text-only r-right r-match-result">
+                            <div class="r-body">
+                                @if ((item.RadiantWin && MatchDetail.PlayerSlot < 5) || (!item.RadiantWin && MatchDetail.PlayerSlot > 5))
+                                {
+                                <a class="won" href="@Url.Content(String.Format("../../Matches/Details/{0}", item.MatchID))">Won Match</a>
+                                }
+                                else
+                                {
+                            <a class="lost" href="@Url.Content(String.Format("../../Matches/Details/{0}", item.MatchID))">Lost Match</a>
+                                }
 
-                                    <div class="subtext">
-                                        @item.StartTime.ToString("MM/dd/yyyy")
-                                    </div>
+                                <div class="subtext">
+                                    @item.StartTime.ToString("MM/dd/yyyy")
                                 </div>
-                            </div> <!-- Result-->
-                            <div class="r-fluid r-175 r-text-only r-first">
-                                <div class="r-body">
-                                    @Html.DisplayFor(modelItem => item.LobbyString)
-                                    <div class="subtext">
-                                        @Html.DisplayFor(modelItem => item.GameModeString)
-                                    </div>
+                            </div>
+                        </td> <!-- Result-->
+                        <td class="game-mode r-fluid r-125 r-text-only r-first">
+                            <div class="r-body">
+                                @Html.DisplayFor(modelItem => item.LobbyString)
+                                <div class="subtext">
+                                    @Html.DisplayFor(modelItem => item.GameModeString)
                                 </div>
-                            </div> <!--Type-->
-                            <div class="r-fluid r-125 r-line-graph r-duration">
-                                Duration
-                                <div class="r-body">
-                                    @min:@seconds
-                                </div>
-                            </div> <!-- Duration-->
-                            <div class="r-fluid r-125 r-line-graph">
-                                KDA
-                                <div class="r-body">
-                                    <span class="kda-record">
-                                        <span class="value">@Html.DisplayFor(modelItem => MatchDetail.Kills)</span>
-                                        /
-                                        <span class="value">@Html.DisplayFor(modelItem => MatchDetail.Deaths)</span>
-                                        /
-                                        <span class="value">@Html.DisplayFor(modelItem => MatchDetail.Assists)</span>
+                            </div>
+                        </td> <!--Type-->
+                        <td class="r-fluid r-125 r-duration">
+                            <div class="r-body">
+                                @min:@seconds
+                            </div>
+                        </td> <!-- Duration-->
+                        <td class="r-fluid r-125">
+                            <div class="r-body">
+                                <span class="kda-record">
+                                    <span class="value">@Html.DisplayFor(modelItem => MatchDetail.Kills)</span>
+                                    /
+                                    <span class="value">@Html.DisplayFor(modelItem => MatchDetail.Deaths)</span>
+                                    /
+                                    <span class="value">@Html.DisplayFor(modelItem => MatchDetail.Assists)</span>
 
-                                    </span>
+                                </span>
+                            </div>
+                        </td> <!--KDA-->
+                        <td class="tf-r r-tab r-group-2 cell-minor r-none-tablet">
+                            <div class="r-fluid r-30">
+                                @foreach (var playeritem in MatchDetail.PlayerItems.Where(i => i.Item.ItemUrl != "None"))
+                                {
+                                <div class="image-container-item">
+                                    <img class="image-item" src="@Url.Content(String.Format("{0}", playeritem.Item.ItemUrl))">
                                 </div>
-                            </div> <!--KDA-->
-                        </div>
-                    </td>
-                </tr>
-
+                                
+                                }
+                           </div>
+                        </td>               
+            </tr>
             }
-                
         </table>
+    </div>
+
+
+            
+                
+
         <div class="reset-button">
             <button class="reset-button" onclick="Reload()" ></button>
         </div>
@@ -87,7 +108,6 @@
         
         @Html.PagedListPager(Model, page => Url.Action("Index",
     new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
-    </div>
 </article>
 
 <script>
