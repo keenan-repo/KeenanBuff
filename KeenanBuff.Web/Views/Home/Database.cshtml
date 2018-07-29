@@ -4,7 +4,33 @@
 }
 
 <h2>Database</h2>
-<p>Clicking the below button will add 10 games to the database</p>
-<input type="button" value="Update Database" onclick="location.href='@Url.Action("UpdateDatabase", "Home")'" />
+<p>Use this page to import games into the database</p>
+<div id="loader" style="display:none;" ></div>
+
+<div style="display:none;" id="loaded" class="animate-bottom">
+    <h2>Success!</h2>
+    <p>Matches add, click again to add more</p>
+</div>
+
+<select id="matches" name="matches">
+    <option value="0">0</option>
+    <option value="10">10</option>
+    <option value="50">50</option>
+    <option value="100">100</option>
+</select>
+<button>Update Database</button>
 
 
+<script>
+    //call database update and show loading overlay
+    $("button").click(function () {
+        document.getElementById("loader").style.display = "block";
+        document.getElementById("loaded").style.display = "none";
+        var matches = $('#matches').find('option:selected').text();
+
+        $.get("/Home/Database?update=true&matches=" + matches, function(){
+            document.getElementById("loaded").style.display = "block";
+            document.getElementById("loader").style.display = "none";
+        });
+    });
+</script>

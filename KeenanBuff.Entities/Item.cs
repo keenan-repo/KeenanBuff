@@ -10,6 +10,7 @@ namespace KeenanBuff.Entities
         public int ItemId { get; set; }
         public string Name { get; set; }
         public string ItemUrl { get; set; }
+        public int Cost { get; set; }
     }
 
 }

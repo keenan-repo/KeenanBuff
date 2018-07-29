@@ -47,7 +47,8 @@ namespace KeenanBuff.Common.SteamAPI
             {
                 ItemId = x.id,
                 Name = x.localized_name,
-                ItemUrl = "http://cdn.dota2.com/apps/dota2/images/items/" + x.name.Remove(0, 5) + "_lg.png"
+                ItemUrl = "http://cdn.dota2.com/apps/dota2/images/items/" + x.name.Remove(0, 5) + "_lg.png",
+                Cost = x.cost
             }).ToList();
 
             gameItems.Add(new Item { ItemId = 0, Name = "Empty", ItemUrl = "None" });
@@ -73,21 +74,19 @@ namespace KeenanBuff.Common.SteamAPI
                 _fileLogger.Error(e.ToString());
             }
 
-            var matchesCount = NumOfMatches;
-            //initially check for new matches. This will start with the 10 most recent
-            RetrieveMatchesAndDiff(context, null, "10");
+            
+            //initially check for new matches. This will start with the 10 most recent 
+            NumOfMatches -= RetrieveMatchesAndDiff(context, null, 10);
 
-            //if no new matches exist, continue with older ones. 
-            for (int i = 0; i < matchesCount; i++)
-            {
-                var startmatchid = context.Matches.OrderBy(m => m.MatchID).Select(x => x.MatchID).FirstOrDefault().ToString();
-                RetrieveMatchesAndDiff(context, startmatchid);
-            }
+            //once new ones are done, continue with older ones. 
+            var startmatchid = context.Matches.OrderBy(m => m.MatchID).Select(x => x.MatchID).FirstOrDefault().ToString();
+            RetrieveMatchesAndDiff(context, startmatchid, NumOfMatches);
+            
 
             _fileLogger.Info("Database Seed Complete");
         }
 
-        private void RetrieveMatchesAndDiff(IKeenanBuffContext context, string startmatchid = null, string NumberOfMatches = null)
+        private int RetrieveMatchesAndDiff(IKeenanBuffContext context, string startmatchid = null, int NumberOfMatches = 2)
         {
             var account_id = 90935174; //this is my account!
             var matches = _apiCalls.GetMatchHistory(account_id, startmatchid, NumberOfMatches).matches;
@@ -98,17 +97,18 @@ namespace KeenanBuff.Common.SteamAPI
             {
                 try
                 {
-                    AddorUpdateMatches(context, matches);
+                    return AddorUpdateMatches(context, matches);
                 }
                 catch (Exception e)
                 {
-
                     _fileLogger.Error(e.ToString());
+                    return 0;
                 }
             }
+            return 0;
         }
 
-        private void AddorUpdateMatches(IKeenanBuffContext context, List<APIModels.Match> matches)
+        private int AddorUpdateMatches(IKeenanBuffContext context, List<APIModels.Match> matches)
         {
             var Matches = new List<Match>();
             foreach (var game in matches)
@@ -203,7 +203,8 @@ namespace KeenanBuff.Common.SteamAPI
             {
                 _fileLogger.Error(e.ToString());
             }
-            
+
+            return Matches.Count();
         }
 
 

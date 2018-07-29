@@ -9,6 +9,11 @@
 
 <article>
     <div class="r-table performances-overview ">
+        <div class="loader-container" style="display:none;">
+            <div id="loader">
+            </div>
+        </div>
+
         <table class="matches">
             <thead>
                 <tr>
@@ -97,15 +102,10 @@
             }
         </table>
     </div>
-
-
-            
-                
-
-        <div class="reset-button">
-            <button class="reset-button" onclick="Reload()" ></button>
-        </div>
-        <div>Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount</div>
+    <div class="reset-button">
+        <button class="reset-button" onclick="Reload()" ></button>
+    </div>
+    <div>Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount</div>
         
         @Html.PagedListPager(Model, page => Url.Action("Index",
     new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
@@ -113,7 +113,11 @@
 
 <script>
     function Reload() {
-        $("#matchesTable").load("/Matches/_MatchesTable");
+        $(".loader-container").css("display", "block");
+
+        $("#matchesTable").load("/Matches/_MatchesTable", function () {
+            document.getElementById("loader").style.display = "none";
+        });
         window.history.replaceState({}, document.title, "/" + "Matches");
     }
 </script>

@@ -16,7 +16,7 @@ namespace KeenanBuff.Common.SteamAPI
             _restClient = restClient;
         }
 
-        public Result GetMatchHistory(long ID, string start_match_id = null, string NumOfMatches = "2")
+        public Result GetMatchHistory(long ID, string start_match_id = null, int NumOfMatches = 2)
         {
             //we need the start match then the next match
             var URL_history = "/IDOTA2Match_570/GetMatchHistory/V001" + "?key=" + API_KEY

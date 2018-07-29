@@ -126,6 +126,10 @@
     <Compile Include="Migrations\201807120418436_initial.Designer.cs">
       <DependentUpon>201807120418436_initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201807291631574_ItemCostColumn.cs" />
+    <Compile Include="Migrations\201807291631574_ItemCostColumn.Designer.cs">
+      <DependentUpon>201807291631574_ItemCostColumn.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="PlayerItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -133,6 +137,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201807120418436_initial.resx">
       <DependentUpon>201807120418436_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807291631574_ItemCostColumn.resx">
+      <DependentUpon>201807291631574_ItemCostColumn.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

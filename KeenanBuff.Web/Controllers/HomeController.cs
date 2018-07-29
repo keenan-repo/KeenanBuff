@@ -31,14 +31,14 @@ namespace KeenanBuff.Controllers
             return View();
         }
 
-        public ActionResult Database()
+        public ActionResult Database(bool update = false, int matches = 0)
         {
-            return View();
-        }
+            if (update)
+            {
+                _seedDatabase.Update(_context, matches);
+            }
 
-        public void UpdateDatabase()
-        {
-            _seedDatabase.Update(_context, 10);
+            return View();
         }
 
     }
