@@ -22,7 +22,6 @@ namespace KeenanBuff.Controllers
 
         public ActionResult Index()
         {
-            _fileLogger.Info("test");
             return View();
         }
 

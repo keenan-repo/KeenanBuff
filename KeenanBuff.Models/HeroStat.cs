@@ -10,6 +10,7 @@ namespace KeenanBuff.Models
     {
         public Hero Hero { get; set; }
         public Match LastMatch { get; set; }
+        public string LastMatchString { get; set; }
         public string Matches { get; set; }
         public string WinRate { get; set; }
         public string Kda { get; set; }

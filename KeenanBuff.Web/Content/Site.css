@@ -18,9 +18,9 @@ body {
 #loader {
     position: absolute;
     left: 50%;
-    top: 50%;
+    top: 30%;
     z-index: 1;
-    margin: -75px 0 0 -75px;
+    margin: 50px 0 0 -75px;
     border: 8px solid #f3f3f3;
     border-radius: 50%;
     border-top: 8px solid #4a6c93;
@@ -33,9 +33,13 @@ body {
 .loader-container {
     position: absolute;
     background: #9494947d;
-    height: 100%;
+    height: 74%;
     width: 100%;
     z-index: 100;
+}
+
+.tab-pane {
+    position:relative;
 }
 
 @-webkit-keyframes spin {
@@ -100,7 +104,7 @@ div.right {
     float: right;
 }
 
-div.wrapper {
+.wrapper {
     background: #0c0c0c4d;
     overflow: hidden;
     padding: 20px;
@@ -234,12 +238,7 @@ iframe{
     height: 720px;
 }
 
-.kda-bars {
-    vertical-align: middle;
-    display: inline-block;
-    box-sizing: border-box;
-    padding: 0 2px;
-}
+
 
 /*Table styles*/
 
@@ -250,12 +249,12 @@ table {
 }
 
 @media screen and (max-width: 700px) {
-    table.matches {
+    .matches {
         width: 100%;
         font-size: 10px;
         margin-bottom: 10px;
     }
-    div.game-mode {
+    .game-mode {
         display: none;
         box-sizing: border-box;
         padding: 0 2px;
@@ -268,6 +267,9 @@ table {
 table th, table td {
     text-align: left;
     vertical-align: middle;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 table.fixed {
@@ -602,7 +604,7 @@ section.dire header {
     width: 34px;
 }
 
-img.image-item {
+.image-item {
     width: 38px;
 }
 
@@ -623,25 +625,33 @@ img.image-item {
     padding-top: 2px;
     min-height: 14px;
     vertical-align: top;
-    font-size: 11px;
 }
 
-div.content-inner a {
+div.subtext a {
+    font-weight: 200;
+    font-size: 0.9em;
+    color: rgba(255,255,255,0.6) !important;
+    padding-top: 2px;
+    min-height: 14px;
+    vertical-align: top;
+}
+
+.content-inner a {
     color: #A9CF54;
 }
 
-div.col-8 {
+.col-8 {
     display: inline-block;
     margin-right: 12px;
     width: 644px;
     vertical-align: top;
 }
 
-div.row-12 {
+.row-12 {
     display: block;
 }
 
-div.container-inner {
+.container-inner {
     margin: auto;
     position: relative;
     max-width: 972px;
@@ -667,4 +677,38 @@ button.reset-button {
     background-repeat: no-repeat;
     height: 30px;
     width: 30px;
+}
+
+/*Player overview*/
+.most-played-heroes {
+    display: inline-block;
+    width: 40%
+}
+
+.kda-bars {
+    vertical-align: middle;
+    display: inline-block;
+    box-sizing: border-box;
+    padding: 0 2px;
+}
+
+.win-rate-chart {
+    display: inline-block;
+    width: 60%;
+    float: right;
+    padding-left: 5px;
+}
+
+.chart-container {
+    width: 100%;
+}
+
+svg {
+    width: inherit;
+}
+
+.grid line {
+    stroke: lightgrey;
+    stroke-opacity: 0.2;
+    shape-rendering: crispEdges;
 }

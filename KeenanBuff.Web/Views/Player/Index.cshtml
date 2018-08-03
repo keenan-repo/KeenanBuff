@@ -11,29 +11,32 @@
     <div class="container">
         <ul class="nav nav-tabs">
             <li class="active"><a data-toggle="tab" href="#heroes">Heroes</a></li>
-            <li><a data-toggle="tab" href="#graphs">Win Rate</a></li>
+            <li><a data-toggle="tab" href="#matches">Matches</a></li>
         </ul>
-
         <div class="tab-content">
-
             <div id="heroes" class="tab-pane fade in active">
-                <header>
-                    Most Played Heroes
-                </header>
-                @Html.Partial("_TopHeroes")
-            </div>
-
-            <div id="graphs" class="tab-pane fade">
-                <svg width="910" height="500" id="WinRate" style="background:#242f39"></svg>
-
-                <script type="text/javascript" src="~/Scripts/WinRateChart.js"></script>
-                <script type="text/javascript">
-                    var model = '@Html.Raw(Json.Encode(Model.WinRate))';
-                    var data = JSON.parse(model);
-                    WinRateChart.init([data, "#WinRate"]);
-                    WinRateChart.drawChart();
-                </script>
-            </div>
+                <div class="most-played-heroes">
+                    <header>
+                        Most Played Heroes
+                    </header>
+                    @Html.Partial("_TopHeroes")
+                </div>
+                <div class="win-rate-chart">
+                    <header>
+                        Win Rate
+                    </header>
+                    <article>
+                        <div id="winrate-chart" class="chart-container r-table performances-overview content-inner" style="background:#242f39"></div>
+                        <script type="text/javascript" src="~/Scripts/WinRateChart.js"></script>
+                        <script type="text/javascript">
+                            var model = '@Html.Raw(Json.Encode(Model.WinRate))';
+                            var data = JSON.parse(model);
+                            WinRateChart.init([data, "#WinRate"]);
+                            WinRateChart.drawChart();
+                        </script>
+                    </article>
+                </div>
+            </div>        
         </div>
     </div>
 </section>

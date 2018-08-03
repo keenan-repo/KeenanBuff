@@ -1,5 +1,5 @@
 ﻿
-@model PagedList.IPagedList<KeenanBuff.Entities.Match>
+@model PagedList.IPagedList<KeenanBuff.Models.MatchViewModel>
 @using PagedList.Mvc;
 @{
     ViewBag.Title = "Index";
@@ -9,10 +9,7 @@
 
 <article>
     <div class="r-table performances-overview ">
-        <div class="loader-container" style="display:none;">
-            <div id="loader">
-            </div>
-        </div>
+
 
         <table class="matches">
             <thead>
@@ -28,27 +25,23 @@
             </thead>
             @foreach (var item in Model)
             {
-                var MatchDetail = item.MatchDetails.Single(p => p.PlayerID == 90935174);
-                int min = item.Duration / 60;
-                int seconds = item.Duration % 60;
-
             <tr>       
                         <td class="r-fluid r-5 r-icon-text">
                             <div class="r-body">
                                 <div class="image-container image-container-hero image-container-icon">
-                                    <img src="@Url.Content(MatchDetail.Hero.HeroUrl)">
+                                    <img src="@Url.Content(item.HeroUrl)">
                                 </div>
                             </div>
                         </td> <!--Hero Icon-->
                         <td class="r-fluid r-23 r-none-tablet">
-                            <a class="won" href="@Url.Content(String.Format("../../Matches/Details/{0}", item.MatchID))">@Html.DisplayFor(modelitem => MatchDetail.Hero.HeroName)</a>
+                            <a class="won" href="@Url.Content(String.Format("../../Matches/Details/{0}", item.MatchID))">@Html.DisplayFor(modelitem => item.HeroName)</a>
                             <div class="subtext">
                                 High Skill
                             </div>
                         </td>
                         <td class="r-fluid r-125 r-text-only r-right r-match-result">
                             <div class="r-body">
-                                @if ((item.RadiantWin && MatchDetail.PlayerSlot < 5) || (!item.RadiantWin && MatchDetail.PlayerSlot > 5))
+                                @if ((item.RadiantWin && item.PlayerSlot < 5) || (!item.RadiantWin && item.PlayerSlot > 5))
                                 {
                                 <a class="won" href="@Url.Content(String.Format("../../Matches/Details/{0}", item.MatchID))">Won Match</a>
                                 }
@@ -58,7 +51,7 @@
                                 }
 
                                 <div class="subtext">
-                                    @item.StartTime.ToString("MM/dd/yyyy")
+                                    @item.StartTime
                                 </div>
                             </div>
                         </td> <!-- Result-->
@@ -66,30 +59,25 @@
                             <div class="r-body">
                                 @Html.DisplayFor(modelItem => item.LobbyString)
                                 <div class="subtext">
-                                    @Html.DisplayFor(modelItem => item.GameModeString)
+                                    @Html.DisplayFor(modelItem => item.GameMode)
                                 </div>
                             </div>
                         </td> <!--Type-->
                         <td class="r-fluid r-125 r-duration">
                             <div class="r-body">
-                                @min:@seconds
+                                @item.Duration
                             </div>
                         </td> <!-- Duration-->
                         <td class="r-fluid r-125">
                             <div class="r-body">
                                 <span class="kda-record">
-                                    <span class="value">@Html.DisplayFor(modelItem => MatchDetail.Kills)</span>
-                                    /
-                                    <span class="value">@Html.DisplayFor(modelItem => MatchDetail.Deaths)</span>
-                                    /
-                                    <span class="value">@Html.DisplayFor(modelItem => MatchDetail.Assists)</span>
-
+                                    @item.Kda
                                 </span>
                             </div>
                         </td> <!--KDA-->
                         <td class="tf-r r-tab r-group-2 cell-minor r-none-tablet">
                             <div class="r-fluid r-30">
-                                @foreach (var playeritem in MatchDetail.PlayerItems.Where(i => i.Item.ItemUrl != "None"))
+                                @foreach (var playeritem in item.Items.Where(i => i.Item.ItemUrl != "None"))
                                 {
                                 <div class="image-container-item">
                                     <img class="image-item" src="@Url.Content(String.Format("{0}", playeritem.Item.ItemUrl))">
@@ -110,14 +98,3 @@
         @Html.PagedListPager(Model, page => Url.Action("Index",
     new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
 </article>
-
-<script>
-    function Reload() {
-        $(".loader-container").css("display", "block");
-
-        $("#matchesTable").load("/Matches/_MatchesTable", function () {
-            document.getElementById("loader").style.display = "none";
-        });
-        window.history.replaceState({}, document.title, "/" + "Matches");
-    }
-</script>

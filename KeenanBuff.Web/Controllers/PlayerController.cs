@@ -22,7 +22,7 @@ namespace KeenanBuff.Controllers
             _queries = queries;
         }
 
-        [OutputCache(Duration = 7200, VaryByParam = "none")]
+        //[OutputCache(Duration = 7200, VaryByParam = "none")]
         public ActionResult Index()
         {
             var playerOverview = new PlayerOverview();
@@ -37,6 +37,7 @@ namespace KeenanBuff.Controllers
             try
             {
                 var matches = _queries.GetMyMatcheDetails();
+                var topHeroCount = 10;
 
                 var HeroStats = _context.MatchDetails
                     .Where(p => p.PlayerID == 90935174)
@@ -49,20 +50,21 @@ namespace KeenanBuff.Controllers
                         Matches = x.Count,
                         LastMatch = matches.Where(h => h.Hero.HeroId == x.Hero.HeroId).Select(m => m.Match).OrderBy(d => d.StartTime).First(),
                         Kda = matches.Where(h => h.Hero.HeroId == x.Hero.HeroId).Average(a => a.Kills / (a.Deaths == 0 ? 1 : a.Deaths)),
-                        AverageAssists = (matches.SelectMany(m => m.Match.MatchDetails).Where(p => p.PlayerID == 90935174 && p.Hero.HeroId == x.Hero.HeroId).Average(a => a.Assists) * 10),
-                        AverageKills = (matches.SelectMany(m => m.Match.MatchDetails).Where(p => p.PlayerID == 90935174 && p.Hero.HeroId == x.Hero.HeroId).Average(a => a.Kills) * 10),
-                        AverageDeaths = (matches.SelectMany(m => m.Match.MatchDetails).Where(p => p.PlayerID == 90935174 && p.Hero.HeroId == x.Hero.HeroId).Average(a => a.Deaths) * 10)
+                        AverageAssists = (matches.SelectMany(m => m.Match.MatchDetails).Where(p => p.PlayerID == 90935174 && p.Hero.HeroId == x.Hero.HeroId).Average(a => a.Assists) * 4),
+                        AverageKills = (matches.SelectMany(m => m.Match.MatchDetails).Where(p => p.PlayerID == 90935174 && p.Hero.HeroId == x.Hero.HeroId).Average(a => a.Kills) * 4),
+                        AverageDeaths = (matches.SelectMany(m => m.Match.MatchDetails).Where(p => p.PlayerID == 90935174 && p.Hero.HeroId == x.Hero.HeroId).Average(a => a.Deaths) * 4)
                     }).OrderByDescending(h => h.Matches).ThenByDescending(h => h.WinRate).Select(h => new HeroStat
                     {
                         Hero = h.Hero,
                         WinRate = h.WinRate.ToString("##.#"),
                         Matches = h.Matches.ToString("##"),
                         LastMatch = h.LastMatch,
+                        LastMatchString = BuildLastMatchString(h.LastMatch.StartTime),
                         Kda = h.Kda.ToString("0.0"),
                         AverageAssists = h.AverageAssists.ToString("0.00"),
                         AverageKills = h.AverageKills.ToString("0.00"),
                         AverageDeaths = h.AverageDeaths.ToString("0.00")
-                    }).Take(10).ToList();
+                    }).Take(topHeroCount).ToList();
 
                 playerOverview.HeroStats = HeroStats;
                 playerOverview.WinRate = CalculateWinRatePlot();
@@ -77,8 +79,8 @@ namespace KeenanBuff.Controllers
         private List<WinRatePoint> CalculateWinRatePlot()
         {
             var matches = _context.Matches.ToList();
-            var startdate = matches.Min(x => x.StartTime);
             var enddate = DateTime.Now;
+            var startdate = enddate.AddDays(-60);
 
             var days = Enumerable.Range(0, 1 + enddate.Subtract(startdate).Days)
                 .Select(offset => startdate.AddDays(offset)).ToList();
@@ -104,6 +106,22 @@ namespace KeenanBuff.Controllers
             }
 
             return WinRate;
+        }
+
+        public string BuildLastMatchString(DateTime lastMatch)
+        {
+            var days = (DateTime.UtcNow - lastMatch).TotalDays;
+
+            if (days < 30)
+            {
+                return Math.Floor(days) + " days ago";
+            }
+
+            if (days > 30)
+            {
+                return Math.Floor(days/30) + " months ago";
+            }
+            return "";
         }
     }
 }

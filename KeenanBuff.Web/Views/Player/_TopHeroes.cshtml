@@ -1,7 +1,7 @@
 ﻿@model KeenanBuff.Models.PlayerOverview
 
 <article>
-    <div class="r-table performances-overview content-inner">
+    <div id="most-played-heroes" class="r-table performances-overview content-inner">
         <table class="matches">
             <thead>
                 <tr>
@@ -25,23 +25,23 @@
                         <div class="r-none-mobile">
                             @Html.ActionLink(item.Hero.HeroName, "Index", "Matches", new { heroId = item.Hero.HeroId }, null)
                             <div class="subtext minor">
-                                Last Match: <a href="@Url.Content("/Matches/Details/" + String.Format(item.LastMatch.MatchID.ToString()))">
-                                    @item.LastMatch.StartTime.ToString("MM/dd/yyyy")
+                                        <a href="@Url.Content("/Matches/Details/" + String.Format(item.LastMatch.MatchID.ToString()))">
+                                    @item.LastMatchString
                                 </a>
                             </div>
                         </div>
                     </td>
-                    <td class="r-fluid r-25 r-text-only r-right r-match-result">
+                    <td class="r-fluid r-10 r-text-only r-right r-match-result">
                         <div class="r-body">
                             @Html.DisplayFor(modelItem => item.Matches)
                         </div>
-                    </td> <!-- Result-->
-                    <td class="game-mode r-fluid r-25 r-text-only r-first">
+                    </td> <!-- WinRate-->
+                    <td class="game-mode r-fluid r-10 r-text-only r-first">
                         <div class="r-body">
                             @Html.DisplayFor(modelItem => item.WinRate) %
                         </div>
                     </td> <!--Type-->
-                    <td class="r-fluid r-25 r-duration">
+                    <td class="r-fluid r-20 r-duration">
                         <div class="kda-bars r-none-tablet">
                             <div style="width:@(item.AverageKills+"px");height:3px;background-color:limegreen;margin-bottom:5px;"></div>
                             <div style="width:@(item.AverageAssists+"px");height:3px;background-color:yellow;margin-bottom:5px;"></div>

@@ -1,4 +1,4 @@
-﻿@model PagedList.IPagedList<KeenanBuff.Entities.Match>
+﻿@model PagedList.IPagedList<KeenanBuff.Models.MatchViewModel>
 @using PagedList.Mvc;
 
 @{
@@ -24,12 +24,34 @@
             <header>
                 Latest Matches
             </header>
-            <div id="matchesTable">
-                @Html.Partial("_MatchesTable")
+            <div class="loader-container" style="display:none;">
+                
+                <div id="loader">
+                </div>
             </div>
-            
+            <div id="matchesTable">
+            </div>
+
 
         </div>
     </div>
 </section>
+
+
+<script>
+    $(document).ready(function () {
+        Reload();
+    });
+
+    function Reload() {
+        $(".loader-container").css("display", "block");
+        //document.getElementById("loader").style.display = "block";
+
+        $("#matchesTable").load("/Matches/_MatchesTable", function () {
+            //document.getElementById("loader").style.display = "none";
+            $(".loader-container").css("display", "none");
+        });
+        window.history.replaceState({}, document.title, "/" + "Matches");
+    }
+</script>
 

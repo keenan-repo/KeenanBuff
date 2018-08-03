@@ -78,6 +78,8 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MatchDetailViewModel.cs" />
+    <Compile Include="MatchViewModel.cs" />
     <Compile Include="PlayerOverview.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="HeroStat.cs" />

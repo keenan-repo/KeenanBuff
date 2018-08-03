@@ -1,23 +1,11 @@
-﻿@model KeenanBuff.Entities.Match
-
-@{
-    ViewBag.Title = "Details";
-}
-
-@{
-    int min = Model.Duration / 60;
-    int seconds = Model.Duration % 60;
-
-}
-
-
+﻿@model List<KeenanBuff.Models.MatchDetailViewModel>
 
 <div class="header-content-container">
     <div class="header-content">
         <div class="header-content-primary">
             <div class="header-content-title">
                 <h1>
-                    Match @Html.DisplayFor(model => model.MatchID)
+                    Match @Html.DisplayFor(model => model.First().MatchID)
                     <small>Overview</small>
                 </h1>
             </div>
@@ -31,8 +19,8 @@
                     Skill Bracket
                 </dt>
             </dl>
-            <dl>           
-                    @Html.DisplayFor(model => model.LobbyString)             
+            <dl>
+                @Html.DisplayFor(model => model.First().LobbyString)
                 <dt>
                     Lobby Type
                 </dt>
@@ -55,7 +43,7 @@
             </dl>
             <dl>
                 <dd>
-                    @min:@seconds
+                    @Html.DisplayFor(modelItem => Model.First().Duration)
                 </dd>
                 <dt>
                     Duration
@@ -63,7 +51,7 @@
             </dl>
             <dl>
                 <dd>
-                    @Html.DisplayFor(modelItem => Model.StartTime)
+                    @Html.DisplayFor(modelItem => Model.First().StartTime)
                 </dd>
                 <dt>
                     Match Ended
@@ -75,7 +63,7 @@
 
 <div class="content-inner">
     <div class="match-show">
-        @if (Model.RadiantWin == true)
+        @if (Model.First().RadiantWin == true)
         {
             <div class="match-result team radiant">Radiant Victory</div>
         }
@@ -85,15 +73,15 @@
         }
 
         <div class="match-victory-subtitle">
-            <span class="the-radiant score">@Html.DisplayFor(item => Model.RadiantScore) </span>
-            <span class="duration">@min:@seconds</span>
-            <span class="the-dire score">@Html.DisplayFor(item => Model.DireScore)</span>
+            <span class="the-radiant score">@Html.DisplayFor(item => Model.First(p => p.PlayerSlot < 5).RadiantScore) </span>
+            <span class="duration">@Html.DisplayFor(item => Model.First().StartTime)</span>
+            <span class="the-dire score">@Html.DisplayFor(item => Model.First(p => p.PlayerSlot > 5).DireScore)</span>
         </div>
 
-            <div class="team-results">
-                @Html.Partial("_MatchTable")
-            </div>
+        <div class="team-results">
+            @Html.Partial("_MatchTable")
         </div>
+    </div>
 </div>
 <p>
     @Html.ActionLink("Back", "Index")

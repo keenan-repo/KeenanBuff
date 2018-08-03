@@ -1,4 +1,4 @@
-﻿@model KeenanBuff.Entities.Match
+﻿@model List<KeenanBuff.Models.MatchDetailViewModel>
 
 <div class="team-results">
     <section class="radiant">
@@ -14,7 +14,7 @@
                             <th class="">Player</th>
                             <th class="">Level</th>
                             <th class="">Score</th>
-                            <th class="">Gold</th>
+                            <th class="">Net Worth</th>
                             <th class="">LH</th>
                             <th class="">Denies</th>
                             <th class="">GPM</th>
@@ -24,12 +24,12 @@
                     </thead>
                     <tbody>
 
-                        @foreach (var item in Model.MatchDetails.Where(i => i.PlayerSlot < 5).OrderBy(m => m.PlayerSlot))
+                        @foreach (var item in Model.Where(i => i.PlayerSlot < 5).OrderBy(m => m.PlayerSlot))
                 {
                     <tr>
                         <td class="r-fluid r-5 r-icon-text">
                             <div class="image-container image-container-hero image-container-icon">
-                                <img src="@Url.Content(item.Hero.HeroUrl)">
+                                <img src="@Url.Content(item.HeroUrl)">
                             </div>
                         </td>
                         <td class="r-fluid r-23">
@@ -44,12 +44,12 @@
                         </td>
                         <td class="r-fluid r-8">
                             <div class="r-body">
-                                @Html.DisplayFor(modelItem => item.Kills)/@Html.DisplayFor(modelItem => item.Deaths)/@Html.DisplayFor(modelItem => item.Assists)
+                                @Html.DisplayFor(modelItem => item.Kda)
                             </div>
                         </td>
                         <td class="r-fluid r-8">
                             <div class="r-body">
-                                @Html.DisplayFor(modelItem => item.Gold)
+                                @Html.DisplayFor(modelItem => item.Networth)
                             </div>
                         </td>
                         <td class="r-fluid r-8">
@@ -74,7 +74,7 @@
                         </td>
                         <td class="tf-r r-tab r-group-2 cell-minor r-none-tablet">
                             <div class="r-fluid r-30">
-                                @foreach (var playeritem in item.PlayerItems.Where(i => i.Item.ItemUrl != "None"))
+                                @foreach (var playeritem in item.Items.Where(i => i.Item.ItemUrl != "None"))
                         {
                             <div class="image-container-item">
                                 <img class="image-item" src="@Url.Content(String.Format("{0}", playeritem.Item.ItemUrl))">
@@ -104,7 +104,7 @@
                             <th class="">Player</th>
                             <th class="">Level</th>
                             <th class="">Score</th>
-                            <th class="">Gold</th>
+                            <th class="">Net Worth</th>
                             <th class="">LH</th>
                             <th class="">Denies</th>
                             <th class="">GPM</th>
@@ -114,15 +114,15 @@
                     </thead>
                     <tbody>
 
-                        @foreach (var item in Model.MatchDetails.Where(i => i.PlayerSlot > 5).OrderBy(m => m.PlayerSlot))
+                        @foreach (var item in Model.Where(i => i.PlayerSlot > 5).OrderBy(m => m.PlayerSlot))
                         {
                             <tr>
                                 <td class="r-fluid r-5 r-icon-text">
                                     <div class="image-container image-container-hero image-container-icon">
-                                        <img src="@Url.Content(item.Hero.HeroUrl)">
+                                        <img src="@Url.Content(item.HeroUrl)">
                                     </div>
                                 </td>
-                                <td class="r-fluid r-20">
+                                <td class="r-fluid r-23">
                                     <div class="r-body">
                                         <span class="player-radiant">@Html.DisplayFor(modelItem => item.SteamName)</span>
                                     </div>
@@ -134,12 +134,12 @@
                                 </td>
                                 <td class="r-fluid r-8">
                                     <div class="r-body">
-                                        @Html.DisplayFor(modelItem => item.Kills)/@Html.DisplayFor(modelItem => item.Deaths)/@Html.DisplayFor(modelItem => item.Assists)
+                                        @Html.DisplayFor(modelItem => item.Kda)
                                     </div>
                                 </td>
                                 <td class="r-fluid r-8">
                                     <div class="r-body">
-                                        @Html.DisplayFor(modelItem => item.Gold)
+                                        @Html.DisplayFor(modelItem => item.Networth)
                                     </div>
                                 </td>
                                 <td class="r-fluid r-8">
@@ -164,7 +164,7 @@
                                 </td>
                                 <td class="tf-r r-tab r-group-2 cell-minor r-none-tablet">
                                     <div class="r-fluid r-30">
-                                        @foreach (var playeritem in item.PlayerItems.Where(i => i.Item.ItemUrl != "None"))
+                                        @foreach (var playeritem in item.Items.Where(i => i.Item.ItemUrl != "None"))
                                         {
                                             <div class="image-container-item">
                                                 <img class="image-item" src="@Url.Content(String.Format("{0}", playeritem.Item.ItemUrl))">
