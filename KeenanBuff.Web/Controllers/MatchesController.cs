@@ -86,8 +86,10 @@ namespace KeenanBuff.Controllers
             int pageNumber = (page ?? 1);
             try
             {
-                var viewmodel = _context.MatchDetails.Where(md => !heroId.HasValue || (md.HeroId == heroId && md.PlayerID == playerID))
-                    .Select(x => x.Match)
+                var FilteredMatches = _context.MatchDetails.Where(md => !heroId.HasValue || (md.HeroId == heroId && md.PlayerID == playerID))
+                    .Select(x => x.Match).Distinct();
+
+                var viewModel = FilteredMatches
                     .Select(x => new {
                         x.MatchDetails.FirstOrDefault(md => md.PlayerID == playerID).Hero.HeroUrl, //only ever one
                         x.MatchID,
@@ -115,9 +117,9 @@ namespace KeenanBuff.Controllers
                         Duration = (m.Duration / 60).ToString("##") + ":" + (m.Duration % 60).ToString("##"),
                         Kda = m.Kills.ToString() + "/" + m.Deaths.ToString() + "/" + m.Assists.ToString(),
                         Items = m.Items.ToList()
-                    }).OrderByDescending(m => m.StartTime).ToPagedList(pageNumber, pageSize);
+                    }).ToList().Distinct().OrderByDescending(m => m.StartTime).ToPagedList(pageNumber, pageSize);
 
-                return PartialView("_MatchesTable", viewmodel);
+                return PartialView("_MatchesTable", viewModel);
             }
             catch (Exception e)
             {
